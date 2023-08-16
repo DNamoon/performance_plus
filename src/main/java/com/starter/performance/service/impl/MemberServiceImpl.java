@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -37,8 +38,12 @@ public class MemberServiceImpl implements MemberService {
   }
 
   @Override
-  public void withdrawalUser() {
-
+  @Transactional
+  public void withdrawalMember(Long id) {
+    Member member = memberRepository.findById(id).orElse(null);
+    if (member != null) {
+      member.setWithdrawalDate(LocalDateTime.now());
+      memberRepository.save(member);
+    }
   }
-
 }
