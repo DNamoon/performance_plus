@@ -22,11 +22,4 @@ public class MemberProfileDto {
   private String nickname;
 
   private LocalDateTime modifiedDate;
-
-  /*
-  public static MemberProfileDto of(Member member) {
-
-  }
-  */
-
 }
