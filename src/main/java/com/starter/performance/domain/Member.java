@@ -1,44 +1,72 @@
 package com.starter.performance.domain;
 
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import lombok.AllArgsConstructor;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
+@Table(name = "member")
+@EntityListeners(AuditingEntityListener.class)
 public class Member {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long memberId;
 
-  private String email;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
+    private Long id;
 
-  private String password;
+    @Column(unique = true, length = 50, nullable = false)
+    private String email;
 
-  private String phoneNumber;
+    @Column(nullable = false)
+    private String password;
 
-  private String nickname;
+    @Column(name = "phone_number", nullable = false)
+    private String phoneNumber;
 
-  private LocalDateTime registeredDate;
+    @Column(nullable = false)
+    private String nickname;
 
-  private LocalDateTime modifiedDate;
+    @Column(name = "registered_date", nullable = false)
+    @CreatedDate
+    @NotNull
+    private LocalDateTime registeredDate;
 
-  private LocalDateTime withdrawalDate;
+    private LocalDateTime modifiedDate;
 
-  private String permission;
+    private LocalDateTime withdrawalDate;
 
-  private boolean emailAuth;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Permission permission;
 
-  private boolean sanctionWhether;
+    private boolean emailAuth;
+
+    private boolean sanctionWhether;
+
+    @Builder
+    public Member(String email, String password, String phoneNumber,
+        String nickname, Permission permission) {
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.nickname = nickname;
+        this.permission = Permission.MEMBER;
+    }
 }
