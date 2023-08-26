@@ -37,7 +37,7 @@ public class Member {
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number", length = 13, nullable = false)
     private String phoneNumber;
 
     @Column(nullable = false)
@@ -52,7 +52,7 @@ public class Member {
 
     private LocalDateTime withdrawalDate;
 
-    @Column(nullable = false)
+    @Column(length = 16, nullable = false)
     @Enumerated(EnumType.STRING)
     private Permission permission;
 
