@@ -2,8 +2,11 @@ package com.starter.performance.controller;
 
 import com.starter.performance.controller.dto.LoginRequestDto;
 import com.starter.performance.controller.dto.SignUpRequestDto;
+import com.starter.performance.domain.Member;
+import com.starter.performance.repository.MemberRepository;
 import com.starter.performance.service.MemberService;
 import com.starter.performance.service.dto.ResponseDto;
+import java.security.Principal;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody @Valid SignUpRequestDto signUpRequestDto) {
@@ -47,9 +51,27 @@ public class MemberController {
         );
     }
 
-//    리뷰를 등록한 사용자의 이메일을 잘 받아오는지 확인하기 위한 임시 코드
+/*
+    리뷰를 등록한 사용자의 이메일을 잘 받아오는지 확인하기 위한 임시 코드
+    ++ 이메일 외에 다른 값도 잘 받아오는지 보기 위해 코드 추가함
+
+    Authentication 객체에서 현재 로그인된 사용자의 이메일을 가져와서
+    findByEmail 메서드를 통해 DB에서 해당 이메일을 가진 사용자 정보를 조회 후 리턴
+*/
+
 //    @PostMapping("/review")
 //    public ResponseEntity<String> review(Authentication authentication) {
-//        return ResponseEntity.ok().body(authentication.getName() + "의 리뷰 등록 완료");
+//        String email = authentication.getName();
+//        Member member = memberRepository.findByEmail(email).get();
+//
+//        String password = member.getPassword();
+//        String Nickname = member.getNickname();
+//        String phoneNumber = member.getPhoneNumber();
+//        String permission = member.getPermission().toString();
+//
+//        String memberInfo = "email: " + email + ", password: " + password + ", nickname: "
+//            + Nickname + ", phoneNumber: " + phoneNumber + ", permission: " + permission;
+//
+//        return ResponseEntity.ok().body(memberInfo + "의 리뷰 등록 완료");
 //    }
 }
