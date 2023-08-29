@@ -7,7 +7,7 @@ import lombok.Getter;
 @Builder
 public class ResponseDto {
 
-    String statusCode;
+    Integer statusCode;
     String message;
     Object data;
 }
