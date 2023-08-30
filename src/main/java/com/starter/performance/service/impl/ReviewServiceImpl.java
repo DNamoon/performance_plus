@@ -62,7 +62,7 @@ public class ReviewServiceImpl implements ReviewService {
         return ResponseDto.builder()
             .message(MESSAGE)
             .statusCode(HttpStatus.OK.value())
-            .data(ReviewResponseDto.builder().title(savedReview.getTitle()).build())
+            .body(ReviewResponseDto.builder().title(savedReview.getTitle()).build())
             .build();
     }
 

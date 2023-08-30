@@ -21,4 +21,3 @@ public class CustomExceptionHandler {
             Objects.requireNonNull(HttpStatus.resolve(exception.getStatusCode())));
     }
 }
-
