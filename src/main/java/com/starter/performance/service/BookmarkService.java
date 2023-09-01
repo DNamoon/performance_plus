@@ -7,4 +7,5 @@ import org.springframework.security.core.Authentication;
 public interface BookmarkService {
 
     ResponseDto createBookmark(BookmarkRequestDto bookmarkRequest, Authentication auth);
+    ResponseDto deleteBookmark(BookmarkRequestDto bookmarkRequest, Authentication auth);
 }

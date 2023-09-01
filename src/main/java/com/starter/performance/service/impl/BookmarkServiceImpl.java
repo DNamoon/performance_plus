@@ -66,4 +66,18 @@ public class BookmarkServiceImpl implements BookmarkService {
                         .performanceName(bookmark.getPerformanceName()).build())
                 .build();
     }
+
+    @Override
+    public ResponseDto deleteBookmark(BookmarkRequestDto bookmarkRequest, Authentication auth) {
+
+        String email = auth.getName();
+        Member member = memberRepository.findByEmail(email).orElseThrow(()-> new MisinformationException());
+
+        bookmarkRepository.deleteByPerformanceId(bookmarkRequest.getPerformance());
+
+        return ResponseDto.builder()
+                .message("북마크가 취소 되었습니다.")
+                .statusCode(HttpStatus.OK.value())
+                .build();
+    }
 }
