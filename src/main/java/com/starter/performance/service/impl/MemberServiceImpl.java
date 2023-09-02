@@ -87,7 +87,8 @@ public class MemberServiceImpl implements MemberService {
         }
 
         String token = JwtUtil.createToken(
-            member.getId(), member.getEmail(), secretKey, expirationTime);
+            member.getId(), member.getEmail(), member.getPermission().toString(),
+            secretKey, expirationTime);
 
         response.addHeader("Authorization", "Bearer " + token);
 

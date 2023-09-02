@@ -7,11 +7,12 @@ import java.util.Date;
 
 public class JwtUtil {
 
-    public static String createToken(Long id, String email,
+    public static String createToken(Long id, String email, String permission,
         String secretKey, long expirationTime) {
         Claims claims = Jwts.claims();
         claims.put("id", id);
         claims.put("email", email);
+        claims.put("permission", permission);
 
         return Jwts.builder()
             .setClaims(claims)
@@ -36,5 +37,13 @@ public class JwtUtil {
             .parseClaimsJws(token)
             .getBody()
             .get("email", String.class);
+    }
+
+    public static String getPermission(String token, String secretKey) {
+        return Jwts.parser()
+            .setSigningKey(secretKey)
+            .parseClaimsJws(token)
+            .getBody()
+            .get("permission", String.class);
     }
 }

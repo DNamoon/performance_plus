@@ -49,9 +49,13 @@ public class JwtFilter extends OncePerRequestFilter {
         String email = JwtUtil.getEmail(token, secretKey);
         log.info("email: {}", email);
 
+        //토큰에서 permission 꺼내기
+        String permission = JwtUtil.getPermission(token, secretKey);
+        log.info("permission: {}", permission);
+
         UsernamePasswordAuthenticationToken authenticationToken =
             new UsernamePasswordAuthenticationToken(email, null,
-                List.of(new SimpleGrantedAuthority("USER")));
+                List.of(new SimpleGrantedAuthority(permission)));
 
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
