@@ -34,7 +34,7 @@ public class SecurityConfig {
             .and()
             .authorizeRequests()
             .antMatchers("/api/auth/signup", "/api/auth/login").permitAll()
-            .antMatchers("/admin/**").hasAnyRole("ADMIN")
+            .antMatchers("/api/admin/**").hasAnyRole("ADMIN")
             .anyRequest().authenticated()
             .and()
             .addFilterBefore(new JwtFilter(memberService, secretKey),
