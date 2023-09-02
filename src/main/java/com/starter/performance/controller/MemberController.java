@@ -2,10 +2,9 @@ package com.starter.performance.controller;
 
 import com.starter.performance.controller.dto.LoginRequestDto;
 import com.starter.performance.controller.dto.SignUpRequestDto;
-import com.starter.performance.domain.Member;
 import com.starter.performance.repository.MemberRepository;
 import com.starter.performance.service.MemberService;
-import com.starter.performance.service.dto.ResponseDto;
+import com.starter.performance.controller.dto.ResponseDto;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -51,16 +50,16 @@ public class MemberController {
         );
     }
 
-/*
-    SecurityContextHolder에 담긴 인증 정보 제거
+    /*
+        SecurityContextHolder에 담긴 인증 정보 제거
 
-    하지만 토큰은 그대로 남아있기 때문에 토큰을 무효화 하지 않으면
-    사용자는 만료되지 않은 토큰을 가지고 다시 인증에 시도할 수 있음
+        하지만 토큰은 그대로 남아있기 때문에 토큰을 무효화 하지 않으면
+        사용자는 만료되지 않은 토큰을 가지고 다시 인증에 시도할 수 있음
 
-    --> 완벽한 로그아웃이라고 할 수 없음ㅠ
-        우선 남은 기능들 먼저 구현하고 시간이 되면
-        redis & RefreshToken을 이용해서 구현하는 방식으로 변경해야 할 듯
-*/
+        --> 완벽한 로그아웃이라고 할 수 없음ㅠ
+            우선 남은 기능들 먼저 구현하고 시간이 되면
+            redis & RefreshToken을 이용해서 구현하는 방식으로 변경해야 할 듯
+    */
     @PostMapping("/logout")
     public ResponseEntity<String> logout() {
         SecurityContextHolder.clearContext();
