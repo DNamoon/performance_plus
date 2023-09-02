@@ -1,4 +1,4 @@
-package com.starter.performance.service.dto;
+package com.starter.performance.controller.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
