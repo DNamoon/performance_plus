@@ -27,27 +27,17 @@ public class MemberController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody @Valid SignUpRequestDto signUpRequestDto) {
-        return new ResponseEntity<>(
-            new ResponseDto<>(
-                "201",
-                "회원가입 성공",
-                memberService.signUp(signUpRequestDto)
-            ),
-            HttpStatus.CREATED
-        );
+        ResponseDto responseDto = memberService.signUp(signUpRequestDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequestDto,
         HttpServletResponse response) {
-        return new ResponseEntity<>(
-            new ResponseDto<>(
-                "200",
-                "로그인 성공",
-                memberService.login(loginRequestDto, response)
-            ),
-            HttpStatus.OK
-        );
+        ResponseDto responseDto = memberService.login(loginRequestDto, response);
+
+        return ResponseEntity.ok(responseDto);
     }
 
     /*
@@ -61,7 +51,7 @@ public class MemberController {
             redis & RefreshToken을 이용해서 구현하는 방식으로 변경해야 할 듯
     */
     @PostMapping("/logout")
-    public ResponseEntity<String> logout() {
+    public ResponseEntity<?> logout() {
         SecurityContextHolder.clearContext();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

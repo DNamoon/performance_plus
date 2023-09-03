@@ -1,12 +1,20 @@
 package com.starter.performance.exception.dto;
 
+import com.starter.performance.exception.ErrorData;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class ErrorResponseDto {
 
-    private final String statusCode;
-    private final ErrorDataDto data;
+    private int statusCode;
+    private ErrorData data;
+
+    @Builder
+    public ErrorResponseDto(int statusCode, ErrorData data) {
+        this.statusCode = statusCode;
+        this.data = data;
+    }
 }

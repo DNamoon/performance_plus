@@ -1,13 +1,21 @@
 package com.starter.performance.controller.dto;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
-public class ResponseDto<T> {
+@NoArgsConstructor
+public class ResponseDto {
 
-    private final String statusCode;
-    private final String message;
-    private final T data;
+    Integer statusCode;
+    String message;
+    Object body;
+
+    @Builder
+    public ResponseDto(Integer statusCode, String message, Object body) {
+        this.statusCode = statusCode;
+        this.message = message;
+        this.body = body;
+    }
 }
