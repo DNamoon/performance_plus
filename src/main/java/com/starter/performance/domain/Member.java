@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,9 +42,8 @@ public class Member {
     @Column(nullable = false)
     private String nickname;
 
-    @Column(name = "registered_date", nullable = false)
+    @Column(name = "registered_date", nullable = false, updatable = false)
     @CreatedDate
-    @NotNull
     private LocalDateTime registeredDate;
 
     private LocalDateTime modifiedDate;
@@ -61,12 +59,11 @@ public class Member {
     private boolean sanctionWhether;
 
     @Builder
-    public Member(String email, String password, String phoneNumber,
-        String nickname, Permission permission) {
+    public Member(String email, String password, String phoneNumber, String nickname) {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.nickname = nickname;
-        this.permission = Permission.MEMBER;
+        this.permission = Permission.ROLE_MEMBER;
     }
 }
