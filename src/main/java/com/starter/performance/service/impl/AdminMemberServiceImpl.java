@@ -1,46 +1,87 @@
 package com.starter.performance.service.impl;
 
+import com.starter.performance.controller.dto.ResponseDto;
 import com.starter.performance.domain.Member;
+import com.starter.performance.domain.SuccessAdminMemberServiceType;
+import com.starter.performance.exception.impl.AlreadySanctionException;
+import com.starter.performance.exception.impl.InvalidMemberException;
 import com.starter.performance.repository.MemberRepository;
 import com.starter.performance.service.AdminMemberService;
-import com.starter.performance.service.MemberService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 @RequiredArgsConstructor
 @Service
 public class AdminMemberServiceImpl implements AdminMemberService {
 
   private final MemberRepository memberRepository;
-  private final MemberService memberService;
 
   @Override
-  public List<Member> memberList() {
-    return memberRepository.findAll();
+  public ResponseDto memberList() {
+    List<Member> allActiveMember = memberRepository.findAllActiveMember();
+    isEmptyList(allActiveMember);
+    return ResponseDto.builder()
+        .message(SuccessAdminMemberServiceType.SUCCESS_INQUIRY_MEMBER_MESSAGE.name())
+        .statusCode(HttpStatus.OK.value())
+        .body(allActiveMember)
+        .build();
+  }
+
+  @Override
+  public ResponseDto memberListAll() {
+    List<Member> memberRepositoryAll = memberRepository.findAll();
+    isEmptyList(memberRepositoryAll);
+    return ResponseDto.builder()
+        .message(SuccessAdminMemberServiceType.SUCCESS_INQUIRY_MEMBER_ALL_MESSAGE.name())
+        .statusCode(HttpStatus.OK.value())
+        .body(memberRepositoryAll)
+        .build();
   }
 
   @Override
   @Transactional
-  public List<Member> searchMember(String email) {
-    return memberRepository.findAllByEmailContaining(email);
+  public ResponseDto searchMember(String email) {
+    List<Member> allByEmailContaining = memberRepository.findAllByEmailContaining(email);
+    isEmptyList(allByEmailContaining);
+    return ResponseDto.builder()
+        .message(SuccessAdminMemberServiceType.SUCCESS_FIND_MEMBER_ALL_MESSAGE.name())
+        .statusCode(HttpStatus.OK.value())
+        .body(allByEmailContaining)
+        .build();
+  }
+
+  private void isEmptyList(List<Member> members) {
+    if (CollectionUtils.isEmpty(members)) {
+      throw new InvalidMemberException();
+    }
   }
 
   // 정확히 일치하는 email 을 입력받아야 함
-  // SecurityConfig 이용해서 접근 설정
   @Override
   @Transactional
-  public void blockMember(String email) {
-    Long memberId = memberRepository.findOneMemberIdByEmail(email);
+  public ResponseDto blockMember(String email) {
+    Member member = memberRepository.findByEmail(email);
+    Long memberId = member.getId();
+    isBlockMember(memberId);
+    member.setSanctionWhether(true);
+    memberRepository.saveAndFlush(member);
+    memberRepository.delete(member);
+    return ResponseDto.builder()
+        .message(SuccessAdminMemberServiceType.SUCCESS_BLOCK_MEMBER_MESSAGE.name())
+        .statusCode(HttpStatus.OK.value())
+        .body(member.isSanctionWhether())
+        .build();
+  }
 
-    if (memberId != null) {
-      memberService.withdrawalMember(memberId);
-      Member member = memberRepository.findById(memberId).orElse(null);
-      if (member != null) {
-        member.setSanctionWhether(true);
-        memberRepository.save(member);
-      }
+  private void isBlockMember(Long id) {
+    Member member = memberRepository.findById(id)
+        .orElseThrow(InvalidMemberException::new);
+    if (member.getWithdrawalDate() != null && member.isSanctionWhether()) {
+      throw new AlreadySanctionException();
     }
   }
 }
