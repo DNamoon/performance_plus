@@ -1,12 +1,21 @@
 package com.starter.performance.service.impl;
 
-import com.starter.performance.controller.dto.MemberProfileDto;
+import com.starter.performance.controller.dto.MemberProfileRequestDto;
+import com.starter.performance.controller.dto.ResponseDto;
 import com.starter.performance.domain.Member;
+import com.starter.performance.domain.SuccessMemberServiceType;
+import com.starter.performance.exception.impl.AlreadyWithdrawalException;
+import com.starter.performance.exception.impl.InvalidMemberException;
+import com.starter.performance.exception.impl.InvalidNicknameException;
+import com.starter.performance.exception.impl.InvalidPasswordException;
+import com.starter.performance.exception.impl.InvalidPhoneNumberException;
+import com.starter.performance.exception.impl.NicknameIsDuplicatedException;
+import com.starter.performance.exception.impl.WrongPasswordException;
 import com.starter.performance.repository.MemberRepository;
 import com.starter.performance.service.MemberService;
-import java.util.Optional;
+import com.starter.performance.service.dto.MemberProfileResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,54 +23,93 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class MemberServiceImpl implements MemberService {
+
   private final MemberRepository memberRepository;
   private final PasswordEncoder encoder;
-
-  ///@Autowired
-  //private EntityManager entityManager;
 
   // 회원 정보 수정, 탈퇴할 때에도 비밀번호 확인과 동시에 토큰 확인 필요!
   // 회원 정보 수정 시 유효성 검사 필요!
   @Override
-  public boolean confirmPassword(Authentication auth, String inputPassword) {
-    Member authMember = (Member) auth.getPrincipal();
-    String password = authMember.getPassword();
-    return encoder.matches(inputPassword, password);
+  public ResponseDto confirmPassword(String email, String inputPassword) {
+    Member member = memberRepository.findByEmail(email);
+    if (member == null) {
+      throw new InvalidMemberException();
+    }
+    String password = member.getPassword();
+    boolean matches = encoder.matches(inputPassword, password);
+    if (!matches) {
+      throw new WrongPasswordException();
+    }
+    return ResponseDto.builder()
+        .message(SuccessMemberServiceType.SUCCESS_CONFIRM_PASSWORD_MESSAGE.name())
+        .statusCode(HttpStatus.OK.value())
+        .body(true)
+        .build();
   }
 
   @Override
   @Transactional
-  public void modifyProfile(MemberProfileDto memberProfileDto) {
-    Optional<Member> optionalMember = memberRepository.findById(memberProfileDto.getMemberId());
-    if (optionalMember.isPresent()) {
-      Member member = Member.builder()
-          .password(memberProfileDto.getPassword())
-          .phoneNumber(memberProfileDto.getPhoneNumber())
-          .nickname(memberProfileDto.getNickname())
-          .build();
-      memberRepository.save(member);
+  public ResponseDto modifyProfile(MemberProfileRequestDto requestDto) {
+    Member member = memberRepository.findById(requestDto.getMemberId())
+        .orElseThrow(InvalidMemberException::new);
+
+    checkMember(requestDto);
+
+    String encodePassword = encoder.encode(requestDto.getPassword());
+    member.setPassword(encodePassword);
+    member.setPhoneNumber(requestDto.getPhoneNumber());
+    member.setNickname(requestDto.getNickname());
+    memberRepository.save(member);
+    return ResponseDto.builder()
+        .message(SuccessMemberServiceType.SUCCESS_MODIFY_PROFILE_MESSAGE.name())
+        .statusCode(HttpStatus.OK.value())
+        .body(MemberProfileResponseDto.builder()
+            .email(member.getEmail())
+            .phoneNumber(member.getPhoneNumber())
+            .nickname(member.getNickname())
+            .registeredDate(member.getRegisteredDate())
+            .modifiedDate(member.getModifiedDate())
+            .rating(member.getRating())
+            .build())
+        .build();
+  }
+
+  private void checkMember(MemberProfileRequestDto memberProfileRequestDto) {
+    if (!memberProfileRequestDto.getPassword()
+        .matches("^(?=.*\\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$")) {
+      throw new InvalidPasswordException();
+    }
+    if (!memberProfileRequestDto.getPhoneNumber()
+        .matches("^\\d{2,3}-\\d{3,4}-\\d{4}$")) {
+      throw new InvalidPhoneNumberException();
+    }
+    if (!memberProfileRequestDto.getNickname()
+        .matches("^[a-zA-Z0-9]{2,10}$")) {
+      throw new InvalidNicknameException();
+    }
+    if (memberRepository.findByNickname(memberProfileRequestDto.getNickname()) != null) {
+      throw new NicknameIsDuplicatedException();
     }
   }
 
   @Override
   @Transactional
-  public void withdrawalMember(Long id) {
-    memberRepository.findById(id)
-        .ifPresent(member -> memberRepository.deleteById(member.getMemberId()));
+  public ResponseDto withdrawalMember(Long id) {
+    isWithdrawalMember(id);
+    Member member = memberRepository.findById(id).orElse(null);
+    memberRepository.delete(member);
+    return ResponseDto.builder()
+        .message(SuccessMemberServiceType.SUCCESS_WITHDRAWAL_MEMBER_MESSAGE.name())
+        .statusCode(HttpStatus.OK.value())
+        .body(null)
+        .build();
   }
 
-  // entity 클래스의 filterDef, filter 어노테이션을 이용해서 soft delete 검색 포함, 비포함 설정
-  // @where 은 무조건 비포함으로 포함 여부를 선택할 수 없음
-  // 아래는 참고를 위해 만들어 놓은 메소드, 실제 구현과는 차이가 있을 수 있음
-
-  /*
-  public Iterable<Member> findAll(boolean isDeleted){
-    Session session = entityManager.unwrap(Session.class);
-    Filter filter = session.enableFilter("deletedProductFilter");
-    filter.setParameter("isDeleted", isDeleted);
-    Iterable<Member> members =  memberRepository.findAll();
-    session.disableFilter("deletedProductFilter");
-    return members;
+  private void isWithdrawalMember(Long id) {
+    Member member = memberRepository.findById(id)
+        .orElseThrow(InvalidMemberException::new);
+    if (member.getWithdrawalDate() != null) {
+      throw new AlreadyWithdrawalException();
+    }
   }
-   */
 }

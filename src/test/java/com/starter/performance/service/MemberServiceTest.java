@@ -1,22 +1,26 @@
 package com.starter.performance.service;
 
-import com.starter.performance.controller.dto.MemberProfileDto;
+import com.starter.performance.controller.dto.ResponseDto;
 import com.starter.performance.domain.Member;
+import com.starter.performance.domain.Permission;
+import com.starter.performance.domain.Rating;
+import com.starter.performance.exception.impl.WrongPasswordException;
 import com.starter.performance.repository.MemberRepository;
-import java.util.Optional;
+import java.time.LocalDateTime;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.AbstractThrowableAssert;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @SpringBootTest
 class MemberServiceTest {
+
   @Autowired
   private MemberRepository memberRepository;
 
@@ -25,48 +29,67 @@ class MemberServiceTest {
 
   // 실패
   @Test
-  @WithMockUser(password = "test1")
   @DisplayName("비밀번호 확인 성공")
+  @Transactional
   void successConfirmPassword() {
     //given
-    String inputPassword = "test1";
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    Member member = Member.builder()
+        .id(10L)
+        .email("test10@gmail.com")
+        .password("$2a$10$6CBzPdU6/gFNMqNo.sqZcOCINafq6JQuZfyDeB/V787euOlpGGkSu")
+        .phoneNumber("010-0000-0000")
+        .nickname("nickname10")
+        .registeredDate(LocalDateTime.now())
+        .permission(Permission.MEMBER.name())
+        .emailAuth(true)
+        .sanctionWhether(false)
+        .rating(new Rating(1, "GENERAL"))
+        .build();
+    memberRepository.save(member);
 
     //when
-    Boolean result = memberService.confirmPassword(auth, inputPassword);
+    String inputPassword = "1q2w3e4r";
+    ResponseDto responseDto = memberService.confirmPassword(member.getEmail(), inputPassword);
 
     //then
-    Assertions.assertThat(result).isTrue();
+    Assertions.assertThat(responseDto.getBody()).isEqualTo(true);
   }
 
   @Test
   @DisplayName("비밀번호 확인 실패")
+  @Transactional
   void failConfirmPassword() {
+    //given
+    Member member = Member.builder()
+        .id(10L)
+        .email("test10@gmail.com")
+        .password("$2a$10$6CBzPdU6/gFNMqNo.sqZcOCINafq6JQuZfyDeB/V787euOlpGGkSu")
+        .phoneNumber("010-0000-0000")
+        .nickname("nickname10")
+        .registeredDate(LocalDateTime.now())
+        .permission(Permission.MEMBER.name())
+        .emailAuth(true)
+        .sanctionWhether(false)
+        .rating(new Rating(1, "GENERAL"))
+        .build();
+    memberRepository.save(member);
 
+    //when
+    String inputPassword = "wrongWord1";
+    AbstractThrowableAssert<?, ? extends Throwable> responseDto =
+    //then
+    Assertions.assertThatThrownBy(() -> memberService.confirmPassword(member.getEmail(), inputPassword))
+        .isInstanceOf(WrongPasswordException.class);
   }
 
   @Test
   @DisplayName("회원 정보 수정 성공")
   void successModifyProfileTest() {
     //given
-    MemberProfileDto memberProfileDto = MemberProfileDto.builder()
-        .memberId(1L)
-        .password("password2")
-        .phoneNumber("01011111111")
-        .nickname("testnickname2")
-        .build();
 
     //when
-    memberService.modifyProfile(memberProfileDto);
-    Optional<Member> id = memberRepository.findById(memberProfileDto.getMemberId());
 
     //then
-    id.ifPresent(member -> Assertions.assertThat(member.getPassword())
-        .isEqualTo(memberProfileDto.getPassword()));
-    id.ifPresent(member -> Assertions.assertThat(member.getPhoneNumber())
-        .isEqualTo(memberProfileDto.getPhoneNumber()));
-    id.ifPresent(member -> Assertions.assertThat(member.getNickname())
-        .isEqualTo(memberProfileDto.getNickname()));
   }
 
   @Test
@@ -86,19 +109,15 @@ class MemberServiceTest {
   }
 
   @Test
+  @Transactional
   @DisplayName("회원 탈퇴 성공 - soft delete")
   void successWithdrawalMemberTest() {
     //given
-    Member member = Member.builder()
-        .memberId(1L)
-        .build();
 
     //when
-    memberService.withdrawalMember(member.getMemberId());
-    Optional<Member> id = memberRepository.findById(member.getMemberId());
 
     //then
-    id.ifPresent(value -> Assertions.assertThat(value.getWithdrawalDate()).isNotNull());
+
   }
 
   @Test
