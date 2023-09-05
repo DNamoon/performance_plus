@@ -1,5 +1,6 @@
 package com.starter.performance.exception.dto;
 
+import com.starter.performance.exception.ErrorData;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,10 +11,10 @@ import lombok.NoArgsConstructor;
 public class ErrorResponseDto {
 
   private int statusCode;
-  private ErrorDataDto data;
+  private ErrorData data;
 
   @Builder
-  private ErrorResponseDto(int statusCode, ErrorDataDto data) {
+  private ErrorResponseDto(int statusCode, ErrorData data) {
     this.statusCode = statusCode;
     this.data = data;
   }

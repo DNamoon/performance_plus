@@ -2,7 +2,7 @@ package com.starter.performance.exception.impl;
 
 import com.starter.performance.exception.AbstractException;
 import com.starter.performance.exception.MemberErrorType;
-import com.starter.performance.exception.dto.ErrorDataDto;
+import com.starter.performance.exception.ErrorData;
 import org.springframework.http.HttpStatus;
 
 public class InvalidPhoneNumberException extends AbstractException {
@@ -13,8 +13,8 @@ public class InvalidPhoneNumberException extends AbstractException {
   }
 
   @Override
-  public ErrorDataDto getData() {
-    return new ErrorDataDto(MemberErrorType.INVALID_PHONE_NUMBER_EXCEPTION.name());
+  public ErrorData getData() {
+    return new ErrorData(MemberErrorType.INVALID_PHONE_NUMBER_EXCEPTION.name());
   }
 
 }

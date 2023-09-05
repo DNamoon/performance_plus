@@ -2,7 +2,7 @@ package com.starter.performance.exception.impl;
 
 import com.starter.performance.exception.AbstractException;
 import com.starter.performance.exception.MemberErrorType;
-import com.starter.performance.exception.dto.ErrorDataDto;
+import com.starter.performance.exception.ErrorData;
 import org.springframework.http.HttpStatus;
 
 public class AlreadySanctionException extends AbstractException {
@@ -13,7 +13,7 @@ public class AlreadySanctionException extends AbstractException {
   }
 
   @Override
-  public ErrorDataDto getData() {
-    return new ErrorDataDto(MemberErrorType.ALREADY_SANCTION_EXCEPTION.name());
+  public ErrorData getData() {
+    return new ErrorData(MemberErrorType.ALREADY_SANCTION_EXCEPTION.name());
   }
 }
