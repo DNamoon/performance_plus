@@ -13,7 +13,7 @@ public class MisinformationException extends AbstractException {
     }
 
     @Override
-    public Object getData() {
+    public ErrorData getData() {
         return new ErrorData(BookmarkErrorCode.MISINFORMATION_EXCEPTION.name());
     }
 }

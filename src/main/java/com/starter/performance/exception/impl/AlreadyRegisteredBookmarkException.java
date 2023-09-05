@@ -13,7 +13,7 @@ public class AlreadyRegisteredBookmarkException extends AbstractException {
     }
 
     @Override
-    public Object getData() {
+    public ErrorData getData() {
         return new ErrorData(BookmarkErrorCode.ALREADY_REGISTERED_BOOKMARK_EXCEPTION.name());
     }
 }

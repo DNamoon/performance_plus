@@ -17,11 +17,11 @@ public class Bookmark {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "memeber_id",  referencedColumnName = "id")
+    @JoinColumn(name = "member",  referencedColumnName = "id")
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "performance_id",  referencedColumnName = "id")
+    @JoinColumn(name = "performance",  referencedColumnName = "id")
     private Performance performance;
 
     private String performanceName;

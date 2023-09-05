@@ -17,8 +17,8 @@ public class PerformanceSchedule {
     private Long performanceScheduleId;
 
     @ManyToOne
-    @JoinColumn(name = "id",  referencedColumnName = "id")
-    private Performance performanceId;
+    @JoinColumn(name = "Performance",  referencedColumnName = "id")
+    private Performance performance;
 
     private LocalDateTime performanceDate;
 

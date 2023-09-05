@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface PerformanceScheduleRepository extends JpaRepository<PerformanceSchedule,Long> {
-    Optional<PerformanceSchedule> findByPerformanceId(Performance performance);
+    Optional<PerformanceSchedule> findByPerformance(Performance performance);
 }
