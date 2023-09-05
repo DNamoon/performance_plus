@@ -7,17 +7,14 @@ import com.starter.performance.domain.Rating;
 import com.starter.performance.exception.impl.WrongPasswordException;
 import com.starter.performance.repository.MemberRepository;
 import java.time.LocalDateTime;
-import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.AbstractThrowableAssert;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
-@Slf4j
 @SpringBootTest
 class MemberServiceTest {
 
@@ -27,7 +24,6 @@ class MemberServiceTest {
   @Autowired
   private MemberService memberService;
 
-  // 실패
   @Test
   @DisplayName("비밀번호 확인 성공")
   @Transactional
@@ -40,7 +36,7 @@ class MemberServiceTest {
         .phoneNumber("010-0000-0000")
         .nickname("nickname10")
         .registeredDate(LocalDateTime.now())
-        .permission(Permission.MEMBER.name())
+        .permission(Permission.MEMBER)
         .emailAuth(true)
         .sanctionWhether(false)
         .rating(new Rating(1, "GENERAL"))
@@ -67,7 +63,7 @@ class MemberServiceTest {
         .phoneNumber("010-0000-0000")
         .nickname("nickname10")
         .registeredDate(LocalDateTime.now())
-        .permission(Permission.MEMBER.name())
+        .permission(Permission.MEMBER)
         .emailAuth(true)
         .sanctionWhether(false)
         .rating(new Rating(1, "GENERAL"))

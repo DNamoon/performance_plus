@@ -14,6 +14,7 @@ import com.starter.performance.exception.impl.WrongPasswordException;
 import com.starter.performance.repository.MemberRepository;
 import com.starter.performance.service.MemberService;
 import com.starter.performance.service.dto.MemberProfileResponseDto;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,11 +32,11 @@ public class MemberServiceImpl implements MemberService {
   // 회원 정보 수정 시 유효성 검사 필요!
   @Override
   public ResponseDto confirmPassword(String email, String inputPassword) {
-    Member member = memberRepository.findByEmail(email);
-    if (member == null) {
+    Optional<Member> member = memberRepository.findByEmail(email);
+    if (member.isEmpty()) {
       throw new InvalidMemberException();
     }
-    String password = member.getPassword();
+    String password = member.get().getPassword();
     boolean matches = encoder.matches(inputPassword, password);
     if (!matches) {
       throw new WrongPasswordException();

@@ -5,12 +5,13 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,31 +26,32 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Builder
 @SQLDelete(sql = "UPDATE member SET withdrawal_date = CURRENT_TIMESTAMP WHERE id = ?")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value={"updatedDate"}, allowGetters=true)
-@Entity
+@JsonIgnoreProperties(value = {"updatedDate"}, allowGetters = true)
 public class Member {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(nullable = false)
   private Long id;
 
-  @NotNull
+  @Column(unique = true, length = 50, nullable = false)
   private String email;
 
-  @NotNull
+  @Column(nullable = false)
   private String password;
 
-  @NotNull
+  @Column(nullable = false)
   private String phoneNumber;
 
-  @NotNull
+  @Column(nullable = false)
   private String nickname;
 
-  @CreatedDate
   @Column(updatable = false, nullable = false)
+  @CreatedDate
   private LocalDateTime registeredDate;
 
   @LastModifiedDate
@@ -57,16 +59,27 @@ public class Member {
 
   private LocalDateTime withdrawalDate;
 
-  @NotNull
-  private String permission;
+  @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
+  private Permission permission;
 
-  @NotNull
+  @Column(nullable = false)
   private boolean emailAuth;
 
-  @NotNull
+  @Column(nullable = false)
   private boolean sanctionWhether;
 
   @ManyToOne
   @JoinColumn(name = "rating")
   private Rating rating;
+
+  @Builder
+  public Member(String email, String password, String phoneNumber,
+      String nickname, Permission permission) {
+    this.email = email;
+    this.password = password;
+    this.phoneNumber = phoneNumber;
+    this.nickname = nickname;
+    this.permission = Permission.MEMBER;
+  }
 }

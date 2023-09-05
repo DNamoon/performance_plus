@@ -14,7 +14,7 @@ public class ErrorResponseDto {
   private ErrorData data;
 
   @Builder
-  private ErrorResponseDto(int statusCode, ErrorData data) {
+  public ErrorResponseDto(int statusCode, ErrorData data) {
     this.statusCode = statusCode;
     this.data = data;
   }

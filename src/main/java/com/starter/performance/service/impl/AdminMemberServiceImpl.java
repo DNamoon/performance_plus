@@ -8,6 +8,7 @@ import com.starter.performance.exception.impl.InvalidMemberException;
 import com.starter.performance.repository.MemberRepository;
 import com.starter.performance.service.AdminMemberService;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -64,16 +65,16 @@ public class AdminMemberServiceImpl implements AdminMemberService {
   @Override
   @Transactional
   public ResponseDto blockMember(String email) {
-    Member member = memberRepository.findByEmail(email);
-    Long memberId = member.getId();
+    Optional<Member> member = memberRepository.findByEmail(email);
+    Long memberId = member.orElseThrow(InvalidMemberException::new).getId();
     isBlockMember(memberId);
-    member.setSanctionWhether(true);
-    memberRepository.saveAndFlush(member);
-    memberRepository.delete(member);
+    member.orElseThrow().setSanctionWhether(true);
+    memberRepository.flush();
+    memberRepository.deleteById(memberId);
     return ResponseDto.builder()
         .message(SuccessAdminMemberServiceType.SUCCESS_BLOCK_MEMBER_MESSAGE.name())
         .statusCode(HttpStatus.OK.value())
-        .body(member.isSanctionWhether())
+        .body(null)
         .build();
   }
 
