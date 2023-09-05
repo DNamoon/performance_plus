@@ -28,7 +28,6 @@ public class PerformanceController {
     public ResponseEntity<ResponseDto> create(
         @Valid @RequestPart CreatePerformanceRequestDto request,
         @RequestPart(required = false) MultipartFile performanceImage) {
-
         String imageUrl = null;
 
         if (performanceImage != null && !performanceImage.isEmpty()) {
@@ -37,12 +36,12 @@ public class PerformanceController {
 
         return ResponseEntity
             .status(CREATED.value())
-            .body(
-                ResponseDto.builder()
-                    .statusCode(CREATED.value())
-                    .body(CreatePerformanceResponseDto.of(
-                        performanceService.create(request.toServiceDto(imageUrl))
-                    )).build());
+            .body(ResponseDto.builder()
+                .statusCode(CREATED.value())
+                .body(CreatePerformanceResponseDto.of(performanceService.create(request.toServiceDto(imageUrl)))
+                ).build()
+            );
     }
 
 }
+

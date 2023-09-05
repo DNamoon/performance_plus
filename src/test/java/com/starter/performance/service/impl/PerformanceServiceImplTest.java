@@ -20,7 +20,6 @@ class PerformanceServiceImplTest {
 
     @Mock
     private PerformanceRepository performanceRepository;
-
     @InjectMocks
     private PerformanceServiceImpl performanceService;
 
@@ -48,5 +47,4 @@ class PerformanceServiceImplTest {
             .isEqualTo(1L);
 
     }
-
 }

@@ -1,6 +1,6 @@
 package com.starter.performance.exception;
 
-import static com.starter.performance.exception.ErrorType.INVALID_REQUEST;
+import static com.starter.performance.exception.ClientErrorType.INVALID_REQUEST_EXCEPTION;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 import com.starter.performance.exception.dto.ErrorResponseDto;
@@ -26,14 +26,13 @@ public class CustomExceptionHandler {
             Objects.requireNonNull(HttpStatus.resolve(exception.getStatusCode())));
     }
 
-
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ErrorResponseDto> bindException(BindException exception) {
         return ResponseEntity.badRequest()
             .body(ErrorResponseDto.builder()
                 .statusCode(BAD_REQUEST.value())
-                .data(new ErrorData(INVALID_REQUEST.name()))
+                .data(new ErrorData(INVALID_REQUEST_EXCEPTION.name()))
                 .build()
             );
 
@@ -45,9 +44,10 @@ public class CustomExceptionHandler {
         return ResponseEntity.badRequest()
             .body(ErrorResponseDto.builder()
                 .statusCode(BAD_REQUEST.value())
-                .data(new ErrorData(INVALID_REQUEST.name()))
+                .data(new ErrorData(INVALID_REQUEST_EXCEPTION.name()))
                 .build()
             );
     }
 }
+
 

@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CreatePerformanceResponseServiceDto {
 
-
     private Long performanceId;
 
     @Builder
@@ -23,5 +22,5 @@ public class CreatePerformanceResponseServiceDto {
             .performanceId(performance.getId())
             .build();
     }
-
 }
+

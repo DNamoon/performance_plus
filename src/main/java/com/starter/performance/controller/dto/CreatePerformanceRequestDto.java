@@ -36,6 +36,5 @@ public class CreatePerformanceRequestDto {
             .imageUrl(imageUrl)
             .build();
     }
-
-
 }
+

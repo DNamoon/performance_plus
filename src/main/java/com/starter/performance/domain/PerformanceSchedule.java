@@ -23,13 +23,10 @@ public class PerformanceSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private LocalDateTime performanceDate;
     private int ticketQuantity;
-
     @Enumerated(EnumType.STRING)
     private PerformanceStatus performanceStatus;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "performance")
     private Performance performance;

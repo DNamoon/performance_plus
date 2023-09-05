@@ -11,8 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.starter.performance.SecurityConfig;
 import com.starter.performance.client.FileClient;
 import com.starter.performance.controller.dto.CreatePerformanceRequestDto;
-import com.starter.performance.exception.ErrorType;
 import com.starter.performance.exception.CustomExceptionHandler;
+import com.starter.performance.exception.ClientErrorType;
 import com.starter.performance.service.PerformanceService;
 import com.starter.performance.service.dto.CreatePerformanceRequestServiceDto;
 import com.starter.performance.service.dto.CreatePerformanceResponseServiceDto;
@@ -39,16 +39,12 @@ class PerformanceControllerTest {
 
     @MockBean
     private PerformanceService performanceService;
-
     @MockBean
     private FileClient fileClient;
-
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ObjectMapper objectMapper;
-
 
     @Test
     @DisplayName("공연 등록")
@@ -93,9 +89,7 @@ class PerformanceControllerTest {
     @ParameterizedTest
     @MethodSource("requestProvider")
     @DisplayName("❌ 공연 등록시 validation 을 통과하지 못하면 예외응답으로 응답한다")
-    public void exception_createPerformance_invalidRequest(
-        CreatePerformanceRequestDto request)
-        throws Exception {
+    public void exception_createPerformance_invalidRequest(CreatePerformanceRequestDto request) throws Exception {
 
         String json = objectMapper.writeValueAsString(request);
 
@@ -117,7 +111,7 @@ class PerformanceControllerTest {
             ).andDo(print())
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.statusCode").value(400))
-            .andExpect(jsonPath("$.data.errorType").value(ErrorType.INVALID_REQUEST.name()));
+            .andExpect(jsonPath("$.data.errorType").value(ClientErrorType.INVALID_REQUEST_EXCEPTION.name()));
 
     }
 
@@ -157,8 +151,5 @@ class PerformanceControllerTest {
                 .detail(thousandLengthText.toString())
                 .build()
         );
-
     }
-
-
 }
