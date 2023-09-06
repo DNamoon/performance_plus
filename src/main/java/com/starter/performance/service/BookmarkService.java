@@ -8,4 +8,6 @@ public interface BookmarkService {
 
     ResponseDto createBookmark(BookmarkRequestDto bookmarkRequest, Authentication auth);
     ResponseDto deleteBookmark(BookmarkRequestDto bookmarkRequest, Authentication auth);
+
+    ResponseDto bookmarkList(String email);
 }
