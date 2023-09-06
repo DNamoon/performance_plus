@@ -38,3 +38,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### yml ###
+application-test.yml
+
+### security ###
+SecurityConfig.java

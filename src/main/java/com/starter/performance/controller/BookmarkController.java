@@ -27,8 +27,9 @@ public class BookmarkController {
         return ResponseEntity.ok(bookmarkService.deleteBookmark(bookmarkRequestDto, auth));
     }
 
-    @GetMapping("/bookmark/{email}")
-    public ResponseEntity<ResponseDto> bookmarkList(@PathVariable String email){
+    @GetMapping("/bookmark")
+    public ResponseEntity<ResponseDto> bookmarkList(Authentication auth){
+        String email = auth.getName();
         return ResponseEntity.ok(bookmarkService.bookmarkList(email));
     }
 }
