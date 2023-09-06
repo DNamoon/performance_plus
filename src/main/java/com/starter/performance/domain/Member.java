@@ -33,53 +33,53 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @JsonIgnoreProperties(value = {"updatedDate"}, allowGetters = true)
 public class Member {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(nullable = false)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
+    private Long id;
 
-  @Column(unique = true, length = 50, nullable = false)
-  private String email;
+    @Column(unique = true, length = 50, nullable = false)
+    private String email;
 
-  @Column(nullable = false)
-  private String password;
+    @Column(nullable = false)
+    private String password;
 
-  @Column(nullable = false)
-  private String phoneNumber;
+    @Column(nullable = false)
+    private String phoneNumber;
 
-  @Column(nullable = false)
-  private String nickname;
+    @Column(nullable = false)
+    private String nickname;
 
-  @Column(updatable = false, nullable = false)
-  @CreatedDate
-  private LocalDateTime registeredDate;
+    @Column(updatable = false, nullable = false)
+    @CreatedDate
+    private LocalDateTime registeredDate;
 
-  @LastModifiedDate
-  private LocalDateTime modifiedDate;
+    @LastModifiedDate
+    private LocalDateTime modifiedDate;
 
-  private LocalDateTime withdrawalDate;
+    private LocalDateTime withdrawalDate;
 
-  @Column(nullable = false)
-  @Enumerated(EnumType.STRING)
-  private Permission permission;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Permission permission;
 
-  @Column(nullable = false)
-  private boolean emailAuth;
+    @Column(nullable = false)
+    private boolean emailAuth;
 
-  @Column(nullable = false)
-  private boolean sanctionWhether;
+    @Column(nullable = false)
+    private boolean sanctionWhether;
 
-  @ManyToOne
-  @JoinColumn(name = "rating")
-  private Rating rating;
+    @ManyToOne
+    @JoinColumn(name = "rating")
+    private Rating rating;
 
-  @Builder
-  public Member(String email, String password, String phoneNumber,
-      String nickname, Permission permission) {
-    this.email = email;
-    this.password = password;
-    this.phoneNumber = phoneNumber;
-    this.nickname = nickname;
-    this.permission = Permission.MEMBER;
-  }
+    @Builder
+    public Member(String email, String password, String phoneNumber,
+        String nickname, Permission permission) {
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.nickname = nickname;
+        this.permission = Permission.MEMBER;
+    }
 }
