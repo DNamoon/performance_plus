@@ -118,6 +118,7 @@
 
 
 ### 채팅 - 권용수
+| [채팅 서버 레파지토리](https://github.com/DevFrog92/performance-chat-application)
 
 - **사용자 기능**
     - 회원가입한 사용자만 채팅 관련 기능을 사용할 수 있다.
@@ -167,3 +168,7 @@
 <br/>
 
 ## ERD
+
+![image](https://github.com/Eunjeong21/performance/assets/82052272/ec59bf74-1c15-46c5-b26e-86fe1f17b76c)
+
+
