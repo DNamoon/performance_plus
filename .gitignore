@@ -36,3 +36,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### application-test.yml ###
+*.yml
+
+### sql 패키지
+sql/

@@ -8,4 +8,5 @@ import lombok.RequiredArgsConstructor;
 public class ErrorData {
 
     private final String errorType;
+
 }
