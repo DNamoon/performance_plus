@@ -16,6 +16,7 @@ import com.starter.performance.service.dto.SignUpResponseDto;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,13 +50,11 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
 
         return ResponseDto.builder()
-            .statusCode(201)
+            .statusCode(HttpStatus.CREATED.value())
             .message("회원가입 성공")
             .body(SignUpResponseDto.builder()
                 .email(member.getEmail())
-                .password(member.getPassword())
                 .nickname(member.getNickname())
-                .phoneNumber(member.getPhoneNumber())
                 .build())
             .build();
     }
@@ -77,11 +76,10 @@ public class MemberServiceImpl implements MemberService {
         response.addHeader("Authorization", "Bearer " + token);
 
         return ResponseDto.builder()
-            .statusCode(200)
+            .statusCode(HttpStatus.OK.value())
             .message("로그인 성공")
             .body(LoginResponseDto.builder()
                 .email(member.getEmail())
-                .password(member.getPassword())
                 .build())
             .build();
     }
