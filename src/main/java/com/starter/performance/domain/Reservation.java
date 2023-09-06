@@ -1,6 +1,7 @@
 package com.starter.performance.domain;
 
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,24 +16,38 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
 @Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PerformanceSchedule {
+public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "performance")
-    private Performance performance;
+    @JoinColumn(name = "member")
+    private Member member;
 
-    private LocalDateTime performanceDate;
+    @ManyToOne
+    @JoinColumn(name = "performance_schedule")
+    private PerformanceSchedule performanceSchedule;
 
-    private Integer ticket_quantity;
+    @Column(nullable = false, length = 100)
+    private String performanceName;
+
+    @Column(nullable = false)
+    private Integer reservedTicketNum;
 
     @Enumerated(EnumType.STRING)
-    private PerformanceStatus performanceStatus;
+    @Column(nullable = false, length = 30)
+    private ReservationStatus reservationStatus;
+
+    @Column(nullable = false)
+    private LocalDateTime performanceDate;
+
+    @Column(nullable = false)
+    private LocalDateTime reservationDate;
+
 }

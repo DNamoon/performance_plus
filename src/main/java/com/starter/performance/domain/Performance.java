@@ -2,29 +2,30 @@ package com.starter.performance.domain;
 
 import lombok.*;
 
-import javax.persistence.*;
-@ToString
-@Entity
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Performance {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = false)
     private String venue;
 
-    @Column
     private String detail;
 
-    @Column
     private String imageUrl;
 }

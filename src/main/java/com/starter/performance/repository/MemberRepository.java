@@ -3,7 +3,6 @@ package com.starter.performance.repository;
 import com.starter.performance.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
 import java.util.Optional;
 
 @Repository

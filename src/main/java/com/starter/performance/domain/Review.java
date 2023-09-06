@@ -1,38 +1,41 @@
 package com.starter.performance.domain;
 
-import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
 @Builder
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PerformanceSchedule {
+public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "performance")
-    private Performance performance;
+    @JoinColumn(name = "member")
+    private Member member;
 
-    private LocalDateTime performanceDate;
+    @OneToOne
+    @JoinColumn(name = "reservation")
+    private Reservation reservation;
 
-    private Integer ticket_quantity;
+    @Column(nullable = false, length = 50)
+    private String title;
 
-    @Enumerated(EnumType.STRING)
-    private PerformanceStatus performanceStatus;
+    @Column(nullable = false, length = 1000)
+    private String content;
+
 }
