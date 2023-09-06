@@ -1,16 +1,17 @@
 package com.starter.performance.controller.dto;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ResponseDto {
 
-    Integer statusCode;
-    String message;
-    Object body;
+    private Integer statusCode;
+    private String message;
+    private Object body;
 
     @Builder
     public ResponseDto(Integer statusCode, String message, Object body) {
