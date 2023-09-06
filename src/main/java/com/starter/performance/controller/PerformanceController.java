@@ -1,15 +1,20 @@
 package com.starter.performance.controller;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 import com.starter.performance.client.FileClient;
 import com.starter.performance.controller.dto.CreatePerformanceRequestDto;
 import com.starter.performance.controller.dto.CreatePerformanceResponseDto;
+import com.starter.performance.controller.dto.FindPerformanceResponseDto;
 import com.starter.performance.controller.dto.ResponseDto;
 import com.starter.performance.service.PerformanceService;
+import com.starter.performance.service.dto.FindPerformanceRequestServiceDto;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -40,6 +45,21 @@ public class PerformanceController {
                 .statusCode(CREATED.value())
                 .body(CreatePerformanceResponseDto.of(performanceService.create(request.toServiceDto(imageUrl)))
                 ).build()
+            );
+    }
+
+    @GetMapping("/performances/{performanceId}")
+    public ResponseEntity<ResponseDto> findPerformance(@PathVariable Long performanceId) {
+        return ResponseEntity
+            .status(OK.value())
+            .body(
+                ResponseDto.builder()
+                    .statusCode(OK.value())
+                    .body(FindPerformanceResponseDto.of(
+                        performanceService.findPerformance(FindPerformanceRequestServiceDto.builder()
+                            .performanceId(performanceId)
+                            .build())
+                    )).build()
             );
     }
 
