@@ -16,13 +16,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
-class MemberServiceTest {
+class MemberProfileServiceTest {
 
   @Autowired
   private MemberRepository memberRepository;
 
   @Autowired
-  private MemberService memberService;
+  private MemberProfileService memberProfileService;
 
   @Test
   @DisplayName("비밀번호 확인 성공")
@@ -45,7 +45,7 @@ class MemberServiceTest {
 
     //when
     String inputPassword = "1q2w3e4r";
-    ResponseDto responseDto = memberService.confirmPassword(member.getEmail(), inputPassword);
+    ResponseDto responseDto = memberProfileService.confirmPassword(member.getEmail(), inputPassword);
 
     //then
     Assertions.assertThat(responseDto.getBody()).isEqualTo(true);
@@ -74,7 +74,7 @@ class MemberServiceTest {
     String inputPassword = "wrongWord1";
     AbstractThrowableAssert<?, ? extends Throwable> responseDto =
     //then
-    Assertions.assertThatThrownBy(() -> memberService.confirmPassword(member.getEmail(), inputPassword))
+    Assertions.assertThatThrownBy(() -> memberProfileService.confirmPassword(member.getEmail(), inputPassword))
         .isInstanceOf(WrongPasswordException.class);
   }
 

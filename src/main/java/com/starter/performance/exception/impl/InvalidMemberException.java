@@ -1,7 +1,7 @@
 package com.starter.performance.exception.impl;
 
 import com.starter.performance.exception.AbstractException;
-import com.starter.performance.exception.MemberErrorType;
+import com.starter.performance.exception.MemberProfileErrorType;
 import com.starter.performance.exception.ErrorData;
 import org.springframework.http.HttpStatus;
 
@@ -14,6 +14,6 @@ public class InvalidMemberException extends AbstractException {
 
   @Override
   public ErrorData getData() {
-    return new ErrorData(MemberErrorType.INVALID_MEMBER_EXCEPTION.name());
+    return new ErrorData(MemberProfileErrorType.INVALID_MEMBER_EXCEPTION.name());
   }
 }

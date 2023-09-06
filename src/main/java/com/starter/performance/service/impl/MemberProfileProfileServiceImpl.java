@@ -3,7 +3,7 @@ package com.starter.performance.service.impl;
 import com.starter.performance.controller.dto.MemberProfileRequestDto;
 import com.starter.performance.controller.dto.ResponseDto;
 import com.starter.performance.domain.Member;
-import com.starter.performance.domain.SuccessMemberServiceType;
+import com.starter.performance.domain.SuccessMemberProfileServiceType;
 import com.starter.performance.exception.impl.AlreadyWithdrawalException;
 import com.starter.performance.exception.impl.InvalidMemberException;
 import com.starter.performance.exception.impl.InvalidNicknameException;
@@ -12,7 +12,7 @@ import com.starter.performance.exception.impl.InvalidPhoneNumberException;
 import com.starter.performance.exception.impl.NicknameIsDuplicatedException;
 import com.starter.performance.exception.impl.WrongPasswordException;
 import com.starter.performance.repository.MemberRepository;
-import com.starter.performance.service.MemberService;
+import com.starter.performance.service.MemberProfileService;
 import com.starter.performance.service.dto.MemberProfileResponseDto;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class MemberServiceImpl implements MemberService {
+public class MemberProfileProfileServiceImpl implements MemberProfileService {
 
   private final MemberRepository memberRepository;
   private final PasswordEncoder encoder;
@@ -42,7 +42,7 @@ public class MemberServiceImpl implements MemberService {
       throw new WrongPasswordException();
     }
     return ResponseDto.builder()
-        .message(SuccessMemberServiceType.SUCCESS_CONFIRM_PASSWORD_MESSAGE.name())
+        .message(SuccessMemberProfileServiceType.SUCCESS_CONFIRM_PASSWORD_MESSAGE.name())
         .statusCode(HttpStatus.OK.value())
         .body(true)
         .build();
@@ -62,7 +62,7 @@ public class MemberServiceImpl implements MemberService {
     member.setNickname(requestDto.getNickname());
     memberRepository.save(member);
     return ResponseDto.builder()
-        .message(SuccessMemberServiceType.SUCCESS_MODIFY_PROFILE_MESSAGE.name())
+        .message(SuccessMemberProfileServiceType.SUCCESS_MODIFY_PROFILE_MESSAGE.name())
         .statusCode(HttpStatus.OK.value())
         .body(MemberProfileResponseDto.builder()
             .email(member.getEmail())
@@ -100,7 +100,7 @@ public class MemberServiceImpl implements MemberService {
     Member member = memberRepository.findById(id).orElse(null);
     memberRepository.delete(member);
     return ResponseDto.builder()
-        .message(SuccessMemberServiceType.SUCCESS_WITHDRAWAL_MEMBER_MESSAGE.name())
+        .message(SuccessMemberProfileServiceType.SUCCESS_WITHDRAWAL_MEMBER_MESSAGE.name())
         .statusCode(HttpStatus.OK.value())
         .body(null)
         .build();

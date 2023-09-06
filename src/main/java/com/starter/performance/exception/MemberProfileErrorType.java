@@ -1,6 +1,6 @@
 package com.starter.performance.exception;
 
-public enum MemberErrorType {
+public enum MemberProfileErrorType {
 
   WRONG_PASSWORD_EXCEPTION,
 
