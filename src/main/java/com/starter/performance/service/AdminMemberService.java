@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface AdminMemberService {
 
-  ResponseDto memberList();
+    ResponseDto memberList();
 
-  ResponseDto memberListAll();
+    ResponseDto memberListAll();
 
-  ResponseDto searchMember(String email);
+    ResponseDto searchMember(String email);
 
-  ResponseDto blockMember(String email);
+    ResponseDto blockMember(String email);
 }

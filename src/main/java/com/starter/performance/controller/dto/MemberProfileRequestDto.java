@@ -11,23 +11,24 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class MemberProfileRequestDto {
 
-  @NotNull
-  private Long memberId;
+    @NotNull
+    private Long memberId;
 
-  @NotNull
-  private String password;
+    @NotNull
+    private String password;
 
-  @NotNull
-  private String phoneNumber;
+    @NotNull
+    private String phoneNumber;
 
-  @NotNull
-  private String nickname;
+    @NotNull
+    private String nickname;
 
-  @Builder
-  public MemberProfileRequestDto(Long memberId, String password, String phoneNumber, String nickname) {
-    this.memberId = memberId;
-    this.password = password;
-    this.phoneNumber = phoneNumber;
-    this.nickname = nickname;
-  }
+    @Builder
+    public MemberProfileRequestDto(Long memberId, String password, String phoneNumber,
+        String nickname) {
+        this.memberId = memberId;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.nickname = nickname;
+    }
 }

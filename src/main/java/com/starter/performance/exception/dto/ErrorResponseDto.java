@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ErrorResponseDto {
 
-  private int statusCode;
-  private ErrorData data;
+    private int statusCode;
+    private ErrorData data;
 
-  @Builder
-  public ErrorResponseDto(int statusCode, ErrorData data) {
-    this.statusCode = statusCode;
-    this.data = data;
-  }
+    @Builder
+    public ErrorResponseDto(int statusCode, ErrorData data) {
+        this.statusCode = statusCode;
+        this.data = data;
+    }
 }

@@ -9,14 +9,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class CustomExceptionHandler {
-  @ExceptionHandler(AbstractException.class)
-  protected ResponseEntity<ErrorResponseDto> handleCustomException(AbstractException exception) {
-    ErrorResponseDto errorResponseDto = ErrorResponseDto.builder()
-        .statusCode(exception.getStatusCode())
-        .data(exception.getData())
-        .build();
 
-    return new ResponseEntity<>(errorResponseDto,
-        Objects.requireNonNull(HttpStatus.resolve(exception.getStatusCode())));
-  }
+    @ExceptionHandler(AbstractException.class)
+    protected ResponseEntity<ErrorResponseDto> handleCustomException(AbstractException exception) {
+        ErrorResponseDto errorResponseDto = ErrorResponseDto.builder()
+            .statusCode(exception.getStatusCode())
+            .data(exception.getData())
+            .build();
+
+        return new ResponseEntity<>(errorResponseDto,
+            Objects.requireNonNull(HttpStatus.resolve(exception.getStatusCode())));
+    }
 }

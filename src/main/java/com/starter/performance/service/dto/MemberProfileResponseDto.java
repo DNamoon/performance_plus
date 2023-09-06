@@ -9,15 +9,15 @@ import lombok.Getter;
 @Builder
 public class MemberProfileResponseDto {
 
-  private String email;
+    private String email;
 
-  private String phoneNumber;
+    private String phoneNumber;
 
-  private String nickname;
+    private String nickname;
 
-  private LocalDateTime registeredDate;
+    private LocalDateTime registeredDate;
 
-  private LocalDateTime modifiedDate;
+    private LocalDateTime modifiedDate;
 
-  private Rating rating;
+    private Rating rating;
 }

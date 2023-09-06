@@ -7,13 +7,13 @@ import org.springframework.http.HttpStatus;
 
 public class AlreadySanctionException extends AbstractException {
 
-  @Override
-  public int getStatusCode() {
-    return HttpStatus.BAD_REQUEST.value();
-  }
+    @Override
+    public int getStatusCode() {
+        return HttpStatus.BAD_REQUEST.value();
+    }
 
-  @Override
-  public ErrorData getData() {
-    return new ErrorData(MemberProfileErrorType.ALREADY_SANCTION_EXCEPTION.name());
-  }
+    @Override
+    public ErrorData getData() {
+        return new ErrorData(MemberProfileErrorType.ALREADY_SANCTION_EXCEPTION.name());
+    }
 }

@@ -11,23 +11,24 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(MemberControllerTest.class)
 class MemberControllerTest {
-  @MockBean
-  private MemberProfileController memberProfileController;
 
-  @MockBean
-  private MemberRepository memberRepository;
+    @MockBean
+    private MemberProfileController memberProfileController;
 
-  @MockBean
-  private MemberProfileService memberProfileService;
+    @MockBean
+    private MemberRepository memberRepository;
 
-  @Autowired
-  private MockMvc mockMvc;
+    @MockBean
+    private MemberProfileService memberProfileService;
 
-  @Autowired
-  private ObjectMapper objectMapper;
+    @Autowired
+    private MockMvc mockMvc;
 
-  @Autowired
-  private PasswordEncoder encoder;
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
+    private PasswordEncoder encoder;
 
 
 }

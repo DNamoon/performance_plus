@@ -9,14 +9,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ResponseDto {
 
-  Integer statusCode;
-  String message;
-  Object body;
+    Integer statusCode;
+    String message;
+    Object body;
 
-  @Builder
-  private ResponseDto(Integer statusCode, String message, Object body) {
-    this.statusCode = statusCode;
-    this.message = message;
-    this.body = body;
-  }
+    @Builder
+    private ResponseDto(Integer statusCode, String message, Object body) {
+        this.statusCode = statusCode;
+        this.message = message;
+        this.body = body;
+    }
 }

@@ -11,53 +11,54 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class AdminMemberProfileServiceTest {
-  @Autowired
-  private MemberRepository memberRepository;
 
-  @Autowired
-  private AdminMemberService adminMemberService;
+    @Autowired
+    private MemberRepository memberRepository;
 
-  @Test
-  @DisplayName("회원 목록 조회 성공")
-  void successLoadMemberList() {
-    //given
+    @Autowired
+    private AdminMemberService adminMemberService;
 
-    //when
+    @Test
+    @DisplayName("회원 목록 조회 성공")
+    void successLoadMemberList() {
+        //given
 
-    //then
+        //when
 
-  }
+        //then
 
-  @Test
-  @DisplayName("회원 목록 조회 실패 - 회원 없음")
-  void failLoadMemberList() {
-    //given
-    //when
-    //then
-  }
+    }
 
-  @Test
-  @DisplayName("회원 검색 성공")
-  void successSearchMemberList() {
-    //given
-    //when
-    //then
-  }
+    @Test
+    @DisplayName("회원 목록 조회 실패 - 회원 없음")
+    void failLoadMemberList() {
+        //given
+        //when
+        //then
+    }
 
-  @Test
-  @DisplayName("회원 검색 실패 - 해당하는 회원 정보 없음")
-  void failSearchMemberList() {
-    //given
-    //when
-    //then
-  }
+    @Test
+    @DisplayName("회원 검색 성공")
+    void successSearchMemberList() {
+        //given
+        //when
+        //then
+    }
 
-  @Test
-  @DisplayName("회원 강퇴 성공")
-  void successBlockMemberList() {
-    //given
-    //when
-    //then
-  }
+    @Test
+    @DisplayName("회원 검색 실패 - 해당하는 회원 정보 없음")
+    void failSearchMemberList() {
+        //given
+        //when
+        //then
+    }
+
+    @Test
+    @DisplayName("회원 강퇴 성공")
+    void successBlockMemberList() {
+        //given
+        //when
+        //then
+    }
 
 }

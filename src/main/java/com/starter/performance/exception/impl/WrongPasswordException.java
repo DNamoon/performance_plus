@@ -7,13 +7,13 @@ import org.springframework.http.HttpStatus;
 
 public class WrongPasswordException extends AbstractException {
 
-  @Override
-  public int getStatusCode() {
-    return HttpStatus.BAD_REQUEST.value();
-  }
+    @Override
+    public int getStatusCode() {
+        return HttpStatus.BAD_REQUEST.value();
+    }
 
-  @Override
-  public ErrorData getData() {
-    return new ErrorData(MemberProfileErrorType.WRONG_PASSWORD_EXCEPTION.name());
-  }
+    @Override
+    public ErrorData getData() {
+        return new ErrorData(MemberProfileErrorType.WRONG_PASSWORD_EXCEPTION.name());
+    }
 }

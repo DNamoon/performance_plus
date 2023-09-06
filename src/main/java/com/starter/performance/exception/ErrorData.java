@@ -7,5 +7,5 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ErrorData {
 
-  private final String errorType;
+    private final String errorType;
 }
