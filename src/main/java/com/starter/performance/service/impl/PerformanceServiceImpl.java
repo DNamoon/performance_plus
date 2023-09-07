@@ -1,5 +1,6 @@
 package com.starter.performance.service.impl;
 
+import com.starter.performance.controller.dto.PerformanceSearchConditionDto;
 import com.starter.performance.domain.Artist;
 import com.starter.performance.domain.Performance;
 import com.starter.performance.domain.PerformanceSchedule;
@@ -13,6 +14,8 @@ import com.starter.performance.service.dto.FindPerformanceRequestServiceDto;
 import com.starter.performance.service.dto.FindPerformanceResponseServiceDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,5 +50,16 @@ public class PerformanceServiceImpl implements PerformanceService {
 
         return FindPerformanceResponseServiceDto.of(performance, performanceSchedules, artists);
     }
+
+    @Override
+    public Slice<FindPerformanceResponseServiceDto> findPerformances(PerformanceSearchConditionDto conditionDto,
+        Pageable pageable) {
+        return performanceRepository.findAllByConditions(conditionDto, pageable)
+            .map(FindPerformanceResponseServiceDto::of);
+
+
+    }
+
+
 }
 

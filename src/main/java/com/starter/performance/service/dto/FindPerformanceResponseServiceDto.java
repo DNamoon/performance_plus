@@ -23,6 +23,7 @@ public class FindPerformanceResponseServiceDto {
     private List<FindPerformanceScheduleResponseServiceDto> performanceSchedules = new ArrayList<>();
     private List<FindArtistResponseServiceDto> artists = new ArrayList<>();
 
+
     @Builder
     public FindPerformanceResponseServiceDto(Long id, String name, String venue, String detail, String imageUrl,
         List<FindPerformanceScheduleResponseServiceDto> performanceSchedules,
@@ -52,6 +53,25 @@ public class FindPerformanceResponseServiceDto {
                     .collect(Collectors.toList()))
             .artists(
                 artists.stream()
+                    .map(FindArtistResponseServiceDto::of)
+                    .collect(Collectors.toList()))
+            .build();
+    }
+
+    public static FindPerformanceResponseServiceDto of(Performance performance) {
+
+        return FindPerformanceResponseServiceDto.builder()
+            .id(performance.getId())
+            .name(performance.getName())
+            .venue(performance.getVenue())
+            .detail(performance.getDetail())
+            .imageUrl(performance.getImageUrl())
+            .performanceSchedules(
+                performance.getPerformanceSchedules().stream()
+                    .map(FindPerformanceScheduleResponseServiceDto::of)
+                    .collect(Collectors.toList()))
+            .artists(
+                performance.getArtists().stream()
                     .map(FindArtistResponseServiceDto::of)
                     .collect(Collectors.toList()))
             .build();

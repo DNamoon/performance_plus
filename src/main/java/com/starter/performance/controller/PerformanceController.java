@@ -7,11 +7,15 @@ import com.starter.performance.client.FileClient;
 import com.starter.performance.controller.dto.CreatePerformanceRequestDto;
 import com.starter.performance.controller.dto.CreatePerformanceResponseDto;
 import com.starter.performance.controller.dto.FindPerformanceResponseDto;
+import com.starter.performance.controller.dto.PerformanceSearchConditionDto;
 import com.starter.performance.controller.dto.ResponseDto;
 import com.starter.performance.service.PerformanceService;
 import com.starter.performance.service.dto.FindPerformanceRequestServiceDto;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +37,7 @@ public class PerformanceController {
     public ResponseEntity<ResponseDto> create(
         @Valid @RequestPart CreatePerformanceRequestDto request,
         @RequestPart(required = false) MultipartFile performanceImage) {
+
         String imageUrl = null;
 
         if (performanceImage != null && !performanceImage.isEmpty()) {
@@ -60,6 +65,22 @@ public class PerformanceController {
                             .performanceId(performanceId)
                             .build())
                     )).build()
+            );
+    }
+
+    @GetMapping("/performances")
+    public ResponseEntity<ResponseDto> findPerformances(PerformanceSearchConditionDto conditionDto,
+        @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        return ResponseEntity
+            .status(OK.value())
+            .body(
+                ResponseDto.builder()
+                    .statusCode(OK.value())
+                    .body(performanceService.findPerformances(conditionDto, pageable)
+                        .map(FindPerformanceResponseDto::of)
+                    )
+                    .build()
             );
     }
 }
