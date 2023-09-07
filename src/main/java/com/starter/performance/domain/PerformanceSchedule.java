@@ -56,4 +56,3 @@ public class PerformanceSchedule {
         this.updateTicketQuantity(ticketQuantity);
     }
 }
-

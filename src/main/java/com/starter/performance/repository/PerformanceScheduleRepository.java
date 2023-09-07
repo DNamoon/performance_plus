@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-
-public interface PerformanceScheduleRepository extends JpaRepository<PerformanceSchedule, Long> {
+public interface PerformanceScheduleRepository extends JpaRepository<PerformanceSchedule, Long>,
+    PerformanceScheduleRepositoryQueryDsl {
 
     Optional<PerformanceSchedule> findByPerformance(Performance performance);
 

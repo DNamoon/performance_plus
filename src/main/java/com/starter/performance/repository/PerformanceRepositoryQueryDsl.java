@@ -10,3 +10,4 @@ public interface PerformanceRepositoryQueryDsl {
     Slice<Performance> findAllByConditions(PerformanceSearchConditionDto performanceSearchConditionDto,
         Pageable pageable);
 }
+
