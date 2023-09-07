@@ -1,14 +1,20 @@
 package com.starter.performance.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
@@ -57,7 +63,12 @@ public class Member {
 
     private boolean emailAuth;
 
-    private boolean sanctionWhether;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rating", referencedColumnName = "id")
+    private Rating rating;
+
+    @OneToMany(mappedBy = "member")
+    private List<Review> reviews = new ArrayList<>();
 
     @Builder
     public Member(String email, String password, String phoneNumber, String nickname) {
@@ -66,5 +77,10 @@ public class Member {
         this.phoneNumber = phoneNumber;
         this.nickname = nickname;
         this.permission = Permission.ROLE_MEMBER;
+        this.rating = new Rating(1);
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
     }
 }
