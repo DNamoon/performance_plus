@@ -17,6 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final MemberService memberService;
+    private final JsonAuthenticationEntryPoint jsonAuthenticationEntryPoint;
+    private final JsonAccessDeniedHandler jsonAccessDeniedHandler;
 
     @Value("${jwt.secret.key}")
     private String secretKey;
@@ -33,12 +35,17 @@ public class SecurityConfig {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            .antMatchers("/api/auth/signup", "/api/auth/login").permitAll()
-            .antMatchers("/api/admin/**").hasAnyRole("ADMIN")
+            .antMatchers("/", "/auth/signup", "/auth/login").permitAll()
+            .antMatchers("/admin/**").hasRole("ADMIN")
             .anyRequest().authenticated()
+            .and()
+            .exceptionHandling()
+            .authenticationEntryPoint(jsonAuthenticationEntryPoint)
+            .accessDeniedHandler(jsonAccessDeniedHandler)
             .and()
             .addFilterBefore(new JwtFilter(memberService, secretKey),
                 UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(new JwtExceptionFilter(), JwtFilter.class)
             .build();
     }
 }
