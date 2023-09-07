@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Table(name = "member")
 @EntityListeners(AuditingEntityListener.class)
 public class Member {
 
@@ -34,13 +37,13 @@ public class Member {
     @Column(nullable = false)
     private String password;
 
-    @Column(length = 13, nullable = false)
+    @Column(name = "phone_number", length = 13, nullable = false)
     private String phoneNumber;
 
     @Column(nullable = false)
     private String nickname;
 
-    @Column(nullable = false, updatable = false)
+    @Column(name = "registered_date", nullable = false, updatable = false)
     @CreatedDate
     private LocalDateTime registeredDate;
 
