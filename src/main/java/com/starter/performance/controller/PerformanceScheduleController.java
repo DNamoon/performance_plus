@@ -1,14 +1,18 @@
 package com.starter.performance.controller;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 import com.starter.performance.controller.dto.CreatePerformanceScheduleRequestDto;
 import com.starter.performance.controller.dto.CreatePerformanceScheduleResponseDto;
 import com.starter.performance.controller.dto.ResponseDto;
+import com.starter.performance.controller.dto.UpdatePerformanceScheduleRequestDto;
+import com.starter.performance.controller.dto.UpdatePerformanceScheduleResponseDto;
 import com.starter.performance.service.PerformanceScheduleService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,4 +39,21 @@ public class PerformanceScheduleController {
                 .build()
             );
     }
+
+    @PatchMapping("/schedules/{performanceScheduleId}")
+    public ResponseEntity<ResponseDto> updatePerformanceSchedule(@PathVariable Long performanceScheduleId,
+        @Valid @RequestBody UpdatePerformanceScheduleRequestDto request) {
+
+        return ResponseEntity
+            .status(OK.value())
+            .body(ResponseDto.builder()
+                .statusCode(OK.value())
+                .body(
+                    UpdatePerformanceScheduleResponseDto.of(
+                        performanceScheduleService.updatePerformanceSchedule(
+                            request.toServiceDto(performanceScheduleId))
+                    )).build()
+            );
+    }
 }
+
