@@ -13,9 +13,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,7 +33,9 @@ public class PerformanceSchedule {
 
     private LocalDateTime performanceDate;
 
-    private Integer ticket_quantity;
+    private Integer ticketQuantity;
+
+    private Integer initialTicketQuantity;
 
     @Enumerated(EnumType.STRING)
     private PerformanceStatus performanceStatus;
