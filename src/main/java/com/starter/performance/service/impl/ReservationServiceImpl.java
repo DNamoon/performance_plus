@@ -4,9 +4,9 @@ import com.starter.performance.config.MailComponent;
 import com.starter.performance.controller.dto.ReservationRequestDto;
 import com.starter.performance.controller.dto.ResponseDto;
 import com.starter.performance.domain.Member;
-import com.starter.performance.domain.RatingName;
 import com.starter.performance.domain.PerformanceSchedule;
 import com.starter.performance.domain.PerformanceStatus;
+import com.starter.performance.domain.RatingName;
 import com.starter.performance.domain.Reservation;
 import com.starter.performance.domain.ReservationStatus;
 import com.starter.performance.exception.impl.CanNotVipReservationException;
@@ -22,9 +22,13 @@ import com.starter.performance.repository.ReservationRepository;
 import com.starter.performance.service.ReservationService;
 import com.starter.performance.service.dto.ReservationResponseDto;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -43,6 +47,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final MailComponent mailComponent;
 
     private final static String RESERVATION_MESSAGE = "예매가 완료되었습니다.";
+    private final static String SHOW_MESSAGE = "예매 목록을 불러옵니다.";
 
     private Long possibleReservationDate;
     private final static Long VIP_POSSIBLE_DATE = 7L;
@@ -90,7 +95,6 @@ public class ReservationServiceImpl implements ReservationService {
             .reservationDate(LocalDateTime.now())
             .build();
 
-        log.info("ticketQuantity : " + dto.getReservedTicketNum());
         Reservation savedReservation = reservationRepository.save(reservation);
 
         /** 예약 확인 이메일 보내기 */
@@ -125,8 +129,39 @@ public class ReservationServiceImpl implements ReservationService {
 
     }
 
+    // 예매 목록 보기
+    @Transactional
+    @Override
+    public ResponseDto showReservations(Authentication auth, Pageable pageable) {
+        List<ReservationResponseDto> dtoList = new ArrayList<>();
+
+        String email = auth.getName();
+        Member member = memberRepository.findByEmail(email).orElseThrow(IllegalArgumentException::new);
+
+        Page<Reservation> list = reservationRepository.findAllByMember(member, pageable);
+
+        for (Reservation savedReservation : list) {
+            ReservationResponseDto dto = new ReservationResponseDto(
+                savedReservation.getPerformanceName(),
+                savedReservation.getReservedTicketNum(),
+                savedReservation.getReservationStatus(),
+                savedReservation.getPerformanceDate(),
+                savedReservation.getReservationDate());
+
+            dtoList.add(dto);
+        }
+
+        return ResponseDto.builder()
+            .statusCode(HttpStatus.OK.value())
+            .message(SHOW_MESSAGE)
+            .body(dtoList)
+            .build();
+    }
+
     // JPA 더티 체킹 - performanceSchedule의 티켓 수량 변경. (예매한 표만큼)
-    /** 일반 예매 */
+    /**
+     * 일반 예매
+     */
     @Transactional
     @Override
     public void updateTicketForStandard(Long performanceScheduleId, Integer ticket) {
