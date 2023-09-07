@@ -69,17 +69,21 @@ public class Member {
     @Column(nullable = false)
     private boolean sanctionWhether;
 
+    @Enumerated(EnumType.STRING)
+    private SnsType snsType;
+
     @ManyToOne
     @JoinColumn(name = "rating")
     private Rating rating;
 
     @Builder
     public Member(String email, String password, String phoneNumber,
-        String nickname, Permission permission) {
+        String nickname, Permission permission, SnsType snsType) {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.nickname = nickname;
         this.permission = Permission.MEMBER;
+        this.snsType = snsType;
     }
 }

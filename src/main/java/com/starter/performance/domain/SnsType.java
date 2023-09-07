@@ -1,5 +1,5 @@
 package com.starter.performance.domain;
 
-public class SnsInfo {
-
+public enum SnsType {
+    KAKAO
 }
