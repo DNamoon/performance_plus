@@ -39,4 +39,27 @@ public class Performance {
         this.detail = detail;
         this.imageUrl = imageUrl;
     }
+
+    public void updatePerformance(String name, String venue, String detail, String imageUrl) {
+        this.updateName(name);
+        this.updateVenue(venue);
+        this.updateDetail(detail);
+        this.updateImageUrl(imageUrl);
+    }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public void updateVenue(String venue) {
+        this.venue = venue;
+    }
+
+    public void updateDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public void updateImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

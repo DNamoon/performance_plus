@@ -5,6 +5,8 @@ import com.starter.performance.service.dto.CreatePerformanceRequestServiceDto;
 import com.starter.performance.service.dto.CreatePerformanceResponseServiceDto;
 import com.starter.performance.service.dto.FindPerformanceRequestServiceDto;
 import com.starter.performance.service.dto.FindPerformanceResponseServiceDto;
+import com.starter.performance.service.dto.UpdatePerformanceRequestServiceDto;
+import com.starter.performance.service.dto.UpdatePerformanceResponseServiceDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
@@ -16,4 +18,6 @@ public interface PerformanceService {
 
     Slice<FindPerformanceResponseServiceDto> findPerformances(PerformanceSearchConditionDto conditionDto,
         Pageable pageable);
+
+    UpdatePerformanceResponseServiceDto updatePerformance(UpdatePerformanceRequestServiceDto updatePerformanceDto);
 }

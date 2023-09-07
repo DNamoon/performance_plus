@@ -12,6 +12,8 @@ import com.starter.performance.service.dto.CreatePerformanceRequestServiceDto;
 import com.starter.performance.service.dto.CreatePerformanceResponseServiceDto;
 import com.starter.performance.service.dto.FindPerformanceRequestServiceDto;
 import com.starter.performance.service.dto.FindPerformanceResponseServiceDto;
+import com.starter.performance.service.dto.UpdatePerformanceRequestServiceDto;
+import com.starter.performance.service.dto.UpdatePerformanceResponseServiceDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -56,6 +58,24 @@ public class PerformanceServiceImpl implements PerformanceService {
         Pageable pageable) {
         return performanceRepository.findAllByConditions(conditionDto, pageable)
             .map(FindPerformanceResponseServiceDto::of);
+
+
+    }
+
+    @Transactional
+    @Override
+    public UpdatePerformanceResponseServiceDto updatePerformance(
+        UpdatePerformanceRequestServiceDto updatePerformanceDto) {
+
+        Performance performance = performanceRepository.findById(updatePerformanceDto.getId())
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 공연 ID" + updatePerformanceDto.getId()));
+
+        String oldImageUrl = performance.getImageUrl();
+
+        performance.updatePerformance(updatePerformanceDto.getName(), updatePerformanceDto.getVenue(),
+            updatePerformanceDto.getDetail(), updatePerformanceDto.getImageUrl());
+
+        return UpdatePerformanceResponseServiceDto.of(performance, oldImageUrl);
     }
 }
 
