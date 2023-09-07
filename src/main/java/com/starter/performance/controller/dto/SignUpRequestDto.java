@@ -1,7 +1,6 @@
 package com.starter.performance.controller.dto;
 
 import com.starter.performance.domain.Member;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
