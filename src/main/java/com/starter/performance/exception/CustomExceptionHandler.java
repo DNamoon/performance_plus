@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-/** exception 핸들러 사용하기 위해서 컨트롤러 레이어에 더 가까이 위치 */
 public class CustomExceptionHandler {
 
     @ExceptionHandler(AbstractException.class)
