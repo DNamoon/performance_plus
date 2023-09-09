@@ -13,5 +13,4 @@ public class PerformanceApplication {
     public static void main(String[] args) {
         SpringApplication.run(PerformanceApplication.class, args);
     }
-
 }

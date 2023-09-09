@@ -22,7 +22,7 @@ public class SignUpRequestDto {
         message = "비밀번호는 영문 대소문자와 숫자를 모두 사용하여 8~16자로 입력해야 합니다.")
     private String password;
 
-    @Pattern(regexp = "^[a-zA-Z0-9]{2,10}$",
+    @Pattern(regexp = "^[a-zA-Z0-9]{2,16}$",
         message = "닉네임은 영문 대소문자와 숫자를 사용하여 2~10자로 입력해야 합니다.")
     private String nickname;
 

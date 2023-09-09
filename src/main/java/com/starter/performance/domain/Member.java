@@ -1,5 +1,6 @@
 package com.starter.performance.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,25 +13,28 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import lombok.AllArgsConstructor;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
-@Table(name = "member")
+@SQLDelete(sql = "UPDATE member SET withdrawal_date = CURRENT_TIMESTAMP WHERE id = ?")
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(value = {"updatedDate"}, allowGetters = true)
 public class Member {
 
     @Id
@@ -44,16 +48,17 @@ public class Member {
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "phone_number", length = 13, nullable = false)
+    @Column(length = 13, nullable = false)
     private String phoneNumber;
 
     @Column(nullable = false)
     private String nickname;
 
-    @Column(name = "registered_date", nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false)
     @CreatedDate
     private LocalDateTime registeredDate;
 
+    @LastModifiedDate
     private LocalDateTime modifiedDate;
 
     private LocalDateTime withdrawalDate;
@@ -62,8 +67,10 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Permission permission;
 
+    @Column(nullable = false)
     private boolean emailAuth;
 
+    @Column(nullable = false)
     private boolean sanctionWhether;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -7,7 +7,7 @@ import com.starter.performance.domain.Member;
 import com.starter.performance.exception.impl.DuplicatedEmailException;
 import com.starter.performance.exception.impl.DuplicatedNicknameException;
 import com.starter.performance.exception.impl.UnsubscribedEmailException;
-import com.starter.performance.exception.impl.WrongPasswordException;
+import com.starter.performance.exception.impl.WrongConfirmPasswordException;
 import com.starter.performance.repository.MemberRepository;
 import com.starter.performance.security.JwtUtil;
 import com.starter.performance.service.MemberService;
@@ -66,7 +66,7 @@ public class MemberServiceImpl implements MemberService {
             .orElseThrow(() -> new UnsubscribedEmailException());
 
         if (!bCryptPasswordEncoder.matches(loginRequestDto.getPassword(), member.getPassword())) {
-            throw new WrongPasswordException();
+            throw new WrongConfirmPasswordException();
         }
 
         String token = JwtUtil.createToken(
