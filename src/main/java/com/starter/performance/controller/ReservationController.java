@@ -3,11 +3,14 @@ package com.starter.performance.controller;
 import com.starter.performance.controller.dto.ChangeReservationDto;
 import com.starter.performance.controller.dto.ReservationRequestDto;
 import com.starter.performance.controller.dto.ResponseDto;
+import com.starter.performance.domain.Reservation;
 import com.starter.performance.service.ReservationService;
+import com.starter.performance.service.dto.ReservationResponseDto;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,11 +27,29 @@ public class ReservationController {
 
     private final ReservationService reservationService;
 
+    private final static String RESERVATION_MESSAGE = "예매가 완료되었습니다.";
+
     @PostMapping("/performances/{performanceId}/{performanceScheduleId}/reservation")
     public ResponseEntity<ResponseDto> createReservation(@PathVariable Long performanceScheduleId,
         @PathVariable Long performanceId, @RequestBody @Valid ReservationRequestDto dto,
         Authentication auth) {
-        ResponseDto responseDto = reservationService.makeReservation(performanceId, performanceScheduleId, dto, auth);
+        Reservation savedReservation =
+            reservationService.makeReservation(performanceId, performanceScheduleId, dto, auth);
+
+        reservationService.sendMail(auth.getName(), savedReservation);
+
+        ResponseDto responseDto = ResponseDto.builder()
+            .statusCode(HttpStatus.OK.value())
+            .message(RESERVATION_MESSAGE)
+            .body(new ReservationResponseDto(
+                savedReservation.getPerformanceSchedule().getPerformance().getName(),
+                savedReservation.getReservedTicketNum(),
+                savedReservation.getReservationStatus(),
+                savedReservation.getPerformanceDate(),
+                savedReservation.getReservationDate()
+            ))
+            .build();
+
         return ResponseEntity.ok(responseDto);
     }
 
