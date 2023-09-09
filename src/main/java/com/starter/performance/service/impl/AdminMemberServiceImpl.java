@@ -50,7 +50,6 @@ public class AdminMemberServiceImpl implements AdminMemberService {
     public boolean blockMember(String email) {
         Member member = memberRepository.findByEmail(email)
             .orElseThrow(InvalidMemberException::new);
-        Long memberId = member.getId();
 
         if (member.getWithdrawalDate() != null && member.isSanctionWhether()) {
             throw new AlreadySanctionException();
@@ -58,7 +57,7 @@ public class AdminMemberServiceImpl implements AdminMemberService {
 
         member.setSanctionWhether(true);
         memberRepository.flush();
-        memberRepository.deleteById(memberId);
+        memberRepository.delete(member);
         return true;
     }
 }

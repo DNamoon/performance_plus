@@ -12,7 +12,6 @@ import com.starter.performance.exception.impl.WrongPasswordException;
 import com.starter.performance.repository.MemberRepository;
 import com.starter.performance.service.MemberProfileService;
 import com.starter.performance.service.dto.MemberProfileResponseDto;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,13 +27,10 @@ public class MemberProfileServiceImpl implements MemberProfileService {
     // 회원 정보 수정 시 유효성 검사 필요!
     @Override
     public boolean confirmPassword(String email, String inputPassword) {
-        Optional<Member> member = memberRepository.findByEmail(email);
+        Member member = memberRepository.findByEmail(email)
+            .orElseThrow(InvalidMemberException::new);
 
-        if (member.isEmpty()) {
-            throw new InvalidMemberException();
-        }
-
-        String password = member.get().getPassword();
+        String password = member.getPassword();
         boolean matches = encoder.matches(inputPassword, password);
 
         if (!matches) {
@@ -56,7 +52,6 @@ public class MemberProfileServiceImpl implements MemberProfileService {
         member.setPassword(encodePassword);
         member.setPhoneNumber(requestDto.getPhoneNumber());
         member.setNickname(requestDto.getNickname());
-        System.out.println("setMember");
         memberRepository.save(member);
         return MemberProfileResponseDto.builder()
             .email(member.getEmail())
