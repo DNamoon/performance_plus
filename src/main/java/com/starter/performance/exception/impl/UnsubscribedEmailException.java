@@ -5,7 +5,7 @@ import com.starter.performance.exception.AuthErrorCode;
 import com.starter.performance.exception.ErrorData;
 import org.springframework.http.HttpStatus;
 
-public class WrongPasswordException extends AbstractException {
+public class UnsubscribedEmailException extends AbstractException {
 
     @Override
     public int getStatusCode() {
@@ -14,6 +14,6 @@ public class WrongPasswordException extends AbstractException {
 
     @Override
     public ErrorData getData() {
-        return new ErrorData(AuthErrorCode.WRONG_PASSWORD_EXCEPTION.name());
+        return new ErrorData(AuthErrorCode.UNSUBSCRIBED_EMAIL_EXCEPTION.name());
     }
 }

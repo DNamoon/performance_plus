@@ -5,15 +5,15 @@ import com.starter.performance.exception.AuthErrorCode;
 import com.starter.performance.exception.ErrorData;
 import org.springframework.http.HttpStatus;
 
-public class WrongPasswordException extends AbstractException {
+public class DuplicatedNicknameException extends AbstractException {
 
     @Override
     public int getStatusCode() {
-        return HttpStatus.BAD_REQUEST.value();
+        return HttpStatus.CONFLICT.value();
     }
 
     @Override
     public ErrorData getData() {
-        return new ErrorData(AuthErrorCode.WRONG_PASSWORD_EXCEPTION.name());
+        return new ErrorData(AuthErrorCode.NICKNAME_IS_DUPLICATED_EXCEPTION.name());
     }
 }

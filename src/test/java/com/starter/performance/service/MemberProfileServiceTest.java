@@ -3,7 +3,8 @@ package com.starter.performance.service;
 import com.starter.performance.domain.Member;
 import com.starter.performance.domain.Permission;
 import com.starter.performance.domain.Rating;
-import com.starter.performance.exception.impl.WrongPasswordException;
+import com.starter.performance.domain.RatingName;
+import com.starter.performance.exception.impl.WrongConfirmPasswordException;
 import com.starter.performance.repository.MemberRepository;
 import java.time.LocalDateTime;
 import org.assertj.core.api.Assertions;
@@ -34,10 +35,10 @@ class MemberProfileServiceTest {
             .phoneNumber("010-0000-0000")
             .nickname("nickname10")
             .registeredDate(LocalDateTime.now())
-            .permission(Permission.MEMBER)
+            .permission(Permission.ROLE_MEMBER)
             .emailAuth(true)
             .sanctionWhether(false)
-            .rating(new Rating(1, "GENERAL"))
+            .rating(new Rating(1))
             .build();
         memberRepository.save(member);
 
@@ -62,10 +63,10 @@ class MemberProfileServiceTest {
             .phoneNumber("010-0000-0000")
             .nickname("nickname10")
             .registeredDate(LocalDateTime.now())
-            .permission(Permission.MEMBER)
+            .permission(Permission.ROLE_MEMBER)
             .emailAuth(true)
             .sanctionWhether(false)
-            .rating(new Rating(1, "GENERAL"))
+            .rating(new Rating(1))
             .build();
         memberRepository.save(member);
 
@@ -73,7 +74,7 @@ class MemberProfileServiceTest {
         String inputPassword = "wrongWord1";
         Assertions.assertThatThrownBy(() -> memberProfileService.confirmPassword(
             member.getEmail(), inputPassword))
-            .isInstanceOf(WrongPasswordException.class);
+            .isInstanceOf(WrongConfirmPasswordException.class);
     }
 
     @Test

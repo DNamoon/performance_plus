@@ -1,9 +1,12 @@
 package com.starter.performance.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,22 +15,20 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Performance {
+public class Artist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String venue;
-    private String detail;
-    private String imageUrl;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "performance")
+    private Performance performance;
 
     @Builder
-    private Performance(Long id, String name, String venue, String detail, String imageUrl) {
+    private Artist(Long id, String name, Performance performance) {
         this.id = id;
         this.name = name;
-        this.venue = venue;
-        this.detail = detail;
-        this.imageUrl = imageUrl;
+        this.performance = performance;
     }
 }

@@ -8,7 +8,7 @@ import com.starter.performance.exception.impl.InvalidNicknameException;
 import com.starter.performance.exception.impl.InvalidPasswordException;
 import com.starter.performance.exception.impl.InvalidPhoneNumberException;
 import com.starter.performance.exception.impl.NicknameIsDuplicatedException;
-import com.starter.performance.exception.impl.WrongPasswordException;
+import com.starter.performance.exception.impl.WrongConfirmPasswordException;
 import com.starter.performance.repository.MemberRepository;
 import com.starter.performance.service.MemberProfileService;
 import com.starter.performance.service.dto.MemberProfileResponseDto;
@@ -34,7 +34,7 @@ public class MemberProfileServiceImpl implements MemberProfileService {
         boolean matches = encoder.matches(inputPassword, password);
 
         if (!matches) {
-            throw new WrongPasswordException();
+            throw new WrongConfirmPasswordException();
         }
 
         return true;
