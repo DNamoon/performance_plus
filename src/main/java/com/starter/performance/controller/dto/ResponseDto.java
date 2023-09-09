@@ -14,7 +14,7 @@ public class ResponseDto {
     private Object body;
 
     @Builder
-    public ResponseDto(Integer statusCode, String message, Object body) {
+    public ResponseDto(int statusCode, String message, Object body) {
         this.statusCode = statusCode;
         this.message = message;
         this.body = body;
