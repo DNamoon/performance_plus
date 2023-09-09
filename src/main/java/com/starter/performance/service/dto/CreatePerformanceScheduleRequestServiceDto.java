@@ -28,6 +28,4 @@ public class CreatePerformanceScheduleRequestServiceDto {
             .performance(performance)
             .build();
     }
-
-
 }

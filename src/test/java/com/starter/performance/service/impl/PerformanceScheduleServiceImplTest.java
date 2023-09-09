@@ -29,10 +29,8 @@ class PerformanceScheduleServiceImplTest {
 
     @Mock
     private PerformanceRepository performanceRepository;
-
     @Mock
     private PerformanceScheduleRepository performanceScheduleRepository;
-
     @InjectMocks
     private PerformanceScheduleServiceImpl performanceScheduleService;
 

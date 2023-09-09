@@ -34,6 +34,5 @@ public class PerformanceScheduleController {
                     .of(performanceScheduleService.create(performanceId, request.toServiceDto())))
                 .build()
             );
-
     }
 }

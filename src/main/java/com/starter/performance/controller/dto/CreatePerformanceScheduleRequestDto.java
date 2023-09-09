@@ -35,6 +35,4 @@ public class CreatePerformanceScheduleRequestDto {
         this.performanceDate = performanceDate;
         this.ticketQuantity = ticketQuantity;
     }
-
-
 }
