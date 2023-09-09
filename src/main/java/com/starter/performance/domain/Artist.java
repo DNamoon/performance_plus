@@ -1,9 +1,6 @@
 package com.starter.performance.domain;
 
-import java.time.LocalDateTime;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,28 +15,20 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PerformanceSchedule {
+public class Artist {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime performanceDate;
-    private int ticketQuantity;
-    @Enumerated(EnumType.STRING)
-    private PerformanceStatus performanceStatus;
+    private String name;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "performance")
     private Performance performance;
 
     @Builder
-    private PerformanceSchedule(Long id, LocalDateTime performanceDate, int ticketQuantity,
-        PerformanceStatus performanceStatus, Performance performance) {
+    private Artist(Long id, String name, Performance performance) {
         this.id = id;
-        this.performanceDate = performanceDate;
-        this.ticketQuantity = ticketQuantity;
-        this.performanceStatus = PerformanceStatus.STAND_BY;
+        this.name = name;
         this.performance = performance;
     }
 }
-
-

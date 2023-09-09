@@ -1,31 +1,33 @@
 package com.starter.performance.domain;
 
-import lombok.*;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Performance {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
     private String name;
-
-    @Column(nullable = false)
     private String venue;
-
     private String detail;
-
     private String imageUrl;
+
+    @Builder
+    private Performance(Long id, String name, String venue, String detail, String imageUrl) {
+        this.id = id;
+        this.name = name;
+        this.venue = venue;
+        this.detail = detail;
+        this.imageUrl = imageUrl;
+    }
 }
