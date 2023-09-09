@@ -41,5 +41,3 @@ public class PerformanceSchedule {
         this.performance = performance;
     }
 }
-
-
