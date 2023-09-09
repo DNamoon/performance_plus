@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ResponseDto {
 
-    private Integer statusCode;
+    private int statusCode;
     private String message;
     private Object body;
 
