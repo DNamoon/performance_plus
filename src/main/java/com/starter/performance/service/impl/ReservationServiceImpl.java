@@ -17,7 +17,7 @@ import com.starter.performance.exception.impl.NotPresentTicketException;
 import com.starter.performance.exception.impl.NotProperPerformanceStatusException;
 import com.starter.performance.exception.impl.NotProperReservationDateException;
 import com.starter.performance.exception.impl.NotProperTicketNumException;
-import com.starter.performance.exception.impl.NotValidMember;
+import com.starter.performance.exception.impl.NotValidReservationMemberException;
 import com.starter.performance.exception.impl.NotValidPerformanceException;
 import com.starter.performance.repository.MemberRepository;
 import com.starter.performance.repository.PerformanceScheduleRepository;
@@ -351,7 +351,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public void checkReservationAndMember(Reservation reservation, Member member) {
         if (!member.equals(reservation.getMember())) {
-            throw new NotValidMember();
+            throw new NotValidReservationMemberException();
         }
     }
 
