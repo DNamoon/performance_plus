@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.starter.performance.SecurityConfig;
+import com.starter.performance.TestSecurityConfig;
 import com.starter.performance.controller.dto.CreateArtistRequestDto;
 import com.starter.performance.exception.ClientErrorType;
 import com.starter.performance.exception.CustomExceptionHandler;
@@ -32,7 +32,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers = ArtistController.class)
-@Import({SecurityConfig.class, CustomExceptionHandler.class})
+@Import({TestSecurityConfig.class, CustomExceptionHandler.class})
 public class ArtistControllerTest {
 
     @MockBean

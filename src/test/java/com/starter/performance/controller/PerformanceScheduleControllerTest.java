@@ -10,10 +10,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.starter.performance.SecurityConfig;
+import com.starter.performance.TestSecurityConfig;
 import com.starter.performance.controller.dto.CreatePerformanceScheduleRequestDto;
+import com.starter.performance.exception.ClientErrorType;
 import com.starter.performance.exception.CustomExceptionHandler;
-import com.starter.performance.exception.ErrorType;
 import com.starter.performance.service.PerformanceScheduleService;
 import com.starter.performance.service.dto.CreatePerformanceScheduleRequestServiceDto;
 import com.starter.performance.service.dto.CreatePerformanceScheduleResponseServiceDto;
@@ -31,7 +31,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(controllers = PerformanceScheduleController.class)
-@Import({SecurityConfig.class, CustomExceptionHandler.class})
+@Import({TestSecurityConfig.class, CustomExceptionHandler.class})
 class PerformanceScheduleControllerTest {
 
     @MockBean
@@ -90,7 +90,7 @@ class PerformanceScheduleControllerTest {
             ).andDo(print())
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.statusCode").value(400))
-            .andExpect(jsonPath("$.errorData.errorType").value(ErrorType.INVALID_REQUEST.name()));
+            .andExpect(jsonPath("$.errorData.errorType").value(ClientErrorType.INVALID_REQUEST_EXCEPTION.name()));
 
     }
 
@@ -116,7 +116,7 @@ class PerformanceScheduleControllerTest {
             ).andDo(print())
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.statusCode").value(400))
-            .andExpect(jsonPath("$.errorData.errorType").value(ErrorType.INVALID_REQUEST.name()));
+            .andExpect(jsonPath("$.errorData.errorType").value(ClientErrorType.INVALID_REQUEST_EXCEPTION.name()));
 
     }
 
