@@ -5,6 +5,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### gitignore ###
+.gitignore
+
 ### STS ###
 .apt_generated
 .classpath
@@ -36,8 +39,8 @@ out/
 ### VS Code ###
 .vscode/
 
-### application-test.yml ###
-*.yml
+### yml ###
+application-test.yml
 
-### sql 패키지
-sql/
+### security ###
+SecurityConfig.java
