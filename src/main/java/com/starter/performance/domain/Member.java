@@ -26,8 +26,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Builder
+@Entity
 @SQLDelete(sql = "UPDATE member SET withdrawal_date = CURRENT_TIMESTAMP WHERE id = ?")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"updatedDate"}, allowGetters = true)

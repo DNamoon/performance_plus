@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ResponseDto {
 
-    Integer statusCode;
-    String message;
-    Object body;
+    private Integer statusCode;
+    private String message;
+    private Object body;
 
     @Builder
     public ResponseDto(Integer statusCode, String message, Object body) {
