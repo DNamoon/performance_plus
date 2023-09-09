@@ -64,6 +64,8 @@ public class Member {
 
     private boolean emailAuth;
 
+    private boolean sanctionWhether;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rating", referencedColumnName = "id")
     private Rating rating;
