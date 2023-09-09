@@ -25,10 +25,8 @@ public class ArtistServiceImplTest {
 
     @Mock
     private PerformanceRepository performanceRepository;
-
     @Mock
     private ArtistRepository artistRepository;
-
     @InjectMocks
     private ArtistServiceImpl artistService;
 

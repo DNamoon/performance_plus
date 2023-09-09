@@ -13,8 +13,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.starter.performance.SecurityConfig;
 import com.starter.performance.controller.dto.CreateArtistRequestDto;
+import com.starter.performance.exception.ClientErrorType;
 import com.starter.performance.exception.CustomExceptionHandler;
-import com.starter.performance.exception.ErrorType;
 import com.starter.performance.service.ArtistService;
 import com.starter.performance.service.dto.CreateArtistRequestServiceDto;
 import com.starter.performance.service.dto.CreateArtistResponseServiceDto;
@@ -37,13 +37,10 @@ public class ArtistControllerTest {
 
     @MockBean
     private ArtistService artistService;
-
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ObjectMapper objectMapper;
-
 
     @Test
     @DisplayName("아티스트 등록")
@@ -95,7 +92,7 @@ public class ArtistControllerTest {
             ).andDo(print())
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.statusCode").value(400))
-            .andExpect(jsonPath("$.errorData.errorType").value(ErrorType.INVALID_REQUEST.name()));
+            .andExpect(jsonPath("$.data.errorType").value(ClientErrorType.INVALID_REQUEST_EXCEPTION.name()));
 
     }
 
@@ -119,7 +116,7 @@ public class ArtistControllerTest {
             ).andDo(print())
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.statusCode").value(400))
-            .andExpect(jsonPath("$.errorData.errorType").value(ErrorType.INVALID_REQUEST.name()));
+            .andExpect(jsonPath("$.data.errorType").value(ClientErrorType.INVALID_REQUEST_EXCEPTION.name()));
 
     }
 
