@@ -8,11 +8,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.starter.performance.SecurityConfig;
+import com.starter.performance.TestSecurityConfig;
 import com.starter.performance.client.FileClient;
 import com.starter.performance.controller.dto.CreatePerformanceRequestDto;
-import com.starter.performance.exception.CustomExceptionHandler;
 import com.starter.performance.exception.ClientErrorType;
+import com.starter.performance.exception.CustomExceptionHandler;
 import com.starter.performance.service.PerformanceService;
 import com.starter.performance.service.dto.CreatePerformanceRequestServiceDto;
 import com.starter.performance.service.dto.CreatePerformanceResponseServiceDto;
@@ -34,7 +34,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.multipart.MultipartFile;
 
 @WebMvcTest(controllers = PerformanceController.class)
-@Import({SecurityConfig.class, CustomExceptionHandler.class})
+@Import({TestSecurityConfig.class, CustomExceptionHandler.class})
 class PerformanceControllerTest {
 
     @MockBean
