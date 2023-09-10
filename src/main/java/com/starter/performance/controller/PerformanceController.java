@@ -23,13 +23,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/admin")
+@RequestMapping("/api")
 public class PerformanceController {
 
     private final FileClient fileClient;
     private final PerformanceService performanceService;
 
-    @PostMapping("/performances")
+    @PostMapping("/admin/performances")
     public ResponseEntity<ResponseDto> create(
         @Valid @RequestPart CreatePerformanceRequestDto request,
         @RequestPart(required = false) MultipartFile performanceImage) {
@@ -62,6 +62,5 @@ public class PerformanceController {
                     )).build()
             );
     }
-
 }
 

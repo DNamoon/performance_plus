@@ -19,17 +19,19 @@ public class FindPerformanceResponseServiceDto {
     private String name;
     private String venue;
     private String detail;
+    private String imageUrl;
     private List<FindPerformanceScheduleResponseServiceDto> performanceSchedules = new ArrayList<>();
     private List<FindArtistResponseServiceDto> artists = new ArrayList<>();
 
     @Builder
-    private FindPerformanceResponseServiceDto(Long id, String name, String venue, String detail,
+    public FindPerformanceResponseServiceDto(Long id, String name, String venue, String detail, String imageUrl,
         List<FindPerformanceScheduleResponseServiceDto> performanceSchedules,
         List<FindArtistResponseServiceDto> artists) {
         this.id = id;
         this.name = name;
         this.venue = venue;
         this.detail = detail;
+        this.imageUrl = imageUrl;
         this.performanceSchedules = performanceSchedules;
         this.artists = artists;
     }
@@ -43,6 +45,7 @@ public class FindPerformanceResponseServiceDto {
             .name(performance.getName())
             .venue(performance.getVenue())
             .detail(performance.getDetail())
+            .imageUrl(performance.getImageUrl())
             .performanceSchedules(
                 performanceSchedules.stream()
                     .map(FindPerformanceScheduleResponseServiceDto::of)

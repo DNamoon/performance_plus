@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FindPerformanceScheduleResponseDto {
 
-
     private Long performanceScheduleId;
     private LocalDateTime performanceDate;
     private int ticketQuantity;
@@ -27,7 +26,6 @@ public class FindPerformanceScheduleResponseDto {
         this.ticketQuantity = ticketQuantity;
         this.performanceStatus = performanceStatus;
     }
-
 
     public static FindPerformanceScheduleResponseDto of(FindPerformanceScheduleResponseServiceDto performanceSchedule) {
         return FindPerformanceScheduleResponseDto.builder()

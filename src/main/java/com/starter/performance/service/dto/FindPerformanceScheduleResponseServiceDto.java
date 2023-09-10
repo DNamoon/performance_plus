@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FindPerformanceScheduleResponseServiceDto {
 
-
     private Long id;
     private LocalDateTime performanceDate;
     private int ticketQuantity;

@@ -11,9 +11,7 @@ import lombok.NoArgsConstructor;
 public class FindArtistResponseDto {
 
     private Long artistId;
-
     private String name;
-
 
     @Builder
     public FindArtistResponseDto(Long artistId, String name) {

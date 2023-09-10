@@ -17,21 +17,21 @@ public class FindPerformanceResponseDto {
     private String name;
     private String venue;
     private String detail;
+    private String imageUrl;
     private List<FindPerformanceScheduleResponseDto> performanceSchedules = new ArrayList<>();
     private List<FindArtistResponseDto> artists = new ArrayList<>();
 
-
     @Builder
-    public FindPerformanceResponseDto(Long performanceId, String name, String venue, String detail,
+    private FindPerformanceResponseDto(Long performanceId, String name, String venue, String detail, String imageUrl,
         List<FindPerformanceScheduleResponseDto> performanceSchedules, List<FindArtistResponseDto> artists) {
         this.performanceId = performanceId;
         this.name = name;
         this.venue = venue;
         this.detail = detail;
+        this.imageUrl = imageUrl;
         this.performanceSchedules = performanceSchedules;
         this.artists = artists;
     }
-
 
     public static FindPerformanceResponseDto of(FindPerformanceResponseServiceDto performance) {
 
@@ -40,6 +40,7 @@ public class FindPerformanceResponseDto {
             .name(performance.getName())
             .venue(performance.getVenue())
             .detail(performance.getDetail())
+            .imageUrl(performance.getImageUrl())
             .performanceSchedules(
                 performance.getPerformanceSchedules()
                     .stream()

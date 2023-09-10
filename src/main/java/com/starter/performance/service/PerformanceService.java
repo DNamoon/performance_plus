@@ -9,7 +9,5 @@ public interface PerformanceService {
 
     CreatePerformanceResponseServiceDto create(CreatePerformanceRequestServiceDto createPerformanceDto);
 
-
     FindPerformanceResponseServiceDto findPerformance(FindPerformanceRequestServiceDto findPerformanceDto);
-
 }
