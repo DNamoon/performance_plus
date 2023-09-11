@@ -74,13 +74,11 @@ public class PerformanceController {
 
         return ResponseEntity
             .status(OK.value())
-            .body(
-                ResponseDto.builder()
-                    .statusCode(OK.value())
-                    .body(performanceService.findPerformances(conditionDto, pageable)
-                        .map(FindPerformanceResponseDto::of)
-                    )
-                    .build()
+            .body(ResponseDto.builder()
+                .statusCode(OK.value())
+                .body(performanceService.findPerformances(conditionDto, pageable)
+                    .map(FindPerformanceResponseDto::of))
+                .build()
             );
     }
 }
