@@ -19,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -91,10 +93,19 @@ public class BookmarkServiceImpl implements BookmarkService {
         Member member = memberRepository.findByEmail(email).orElseThrow(() -> new MisinformationException());
         List<Bookmark> bookmarkList = bookmarkRepository.findAllByMember(member);
 
+        List<BookmarkResponseDto> responseDtoList = new ArrayList<>();
+        for (Bookmark bookmark : bookmarkList){
+            BookmarkResponseDto dto = new BookmarkResponseDto(
+                bookmark.getPerformanceName(),
+                bookmark.getPerformanceDate()
+            );
+            responseDtoList.add(dto);
+        }
+
         return ResponseDto.builder()
             .message(email + " 님의 북마크 목록 입니다.")
             .statusCode(HttpStatus.OK.value())
-            .body(bookmarkList.isEmpty() ? null : bookmarkList)
+            .body(responseDtoList.isEmpty() ? null : responseDtoList)
             .build();
     }
 
