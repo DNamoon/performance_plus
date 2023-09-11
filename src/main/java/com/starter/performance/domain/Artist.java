@@ -31,4 +31,12 @@ public class Artist {
         this.name = name;
         this.performance = performance;
     }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public void updateArtist(String name){
+        this.updateName(name);
+    }
 }
