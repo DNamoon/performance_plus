@@ -50,4 +50,11 @@ public class Reservation {
     @Column(nullable = false)
     private LocalDateTime reservationDate;
 
+    public void updateReservedTicketNum(Integer reservedTicketNum) {
+        this.reservedTicketNum = reservedTicketNum;
+    }
+
+    public void updateReservationStatus(ReservationStatus reservationStatus) {
+        this.reservationStatus = reservationStatus;
+    }
 }
