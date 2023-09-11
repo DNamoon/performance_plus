@@ -23,7 +23,6 @@ public class FindPerformanceResponseServiceDto {
     private List<FindPerformanceScheduleResponseServiceDto> performanceSchedules = new ArrayList<>();
     private List<FindArtistResponseServiceDto> artists = new ArrayList<>();
 
-
     @Builder
     public FindPerformanceResponseServiceDto(Long id, String name, String venue, String detail, String imageUrl,
         List<FindPerformanceScheduleResponseServiceDto> performanceSchedules,
@@ -77,3 +76,4 @@ public class FindPerformanceResponseServiceDto {
             .build();
     }
 }
+

@@ -56,10 +56,6 @@ public class PerformanceServiceImpl implements PerformanceService {
         Pageable pageable) {
         return performanceRepository.findAllByConditions(conditionDto, pageable)
             .map(FindPerformanceResponseServiceDto::of);
-
-
     }
-
-
 }
 

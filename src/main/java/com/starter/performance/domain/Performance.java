@@ -31,7 +31,6 @@ public class Performance {
     @OneToMany(mappedBy = "performance", cascade = CascadeType.ALL)
     List<Artist> artists = new ArrayList<>();
 
-
     @Builder
     private Performance(Long id, String name, String venue, String detail, String imageUrl) {
         this.id = id;

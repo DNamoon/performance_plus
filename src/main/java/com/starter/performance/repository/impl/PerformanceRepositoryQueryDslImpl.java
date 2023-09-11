@@ -60,5 +60,4 @@ public class PerformanceRepositoryQueryDslImpl extends QueryDslRepositorySupport
         }
         return null;
     }
-
 }
