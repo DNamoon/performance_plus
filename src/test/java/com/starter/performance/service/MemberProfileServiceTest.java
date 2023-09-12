@@ -1,9 +1,9 @@
 package com.starter.performance.service;
 
+import com.starter.performance.ExcludeSecurityAutoConfiguration;
 import com.starter.performance.domain.Member;
 import com.starter.performance.domain.Permission;
 import com.starter.performance.domain.Rating;
-import com.starter.performance.domain.RatingName;
 import com.starter.performance.exception.impl.WrongConfirmPasswordException;
 import com.starter.performance.repository.MemberRepository;
 import java.time.LocalDateTime;
@@ -11,11 +11,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
-class MemberProfileServiceTest {
+class MemberProfileServiceTest extends ExcludeSecurityAutoConfiguration {
 
     @Autowired
     private MemberRepository memberRepository;
@@ -73,7 +71,7 @@ class MemberProfileServiceTest {
         //when //then
         String inputPassword = "wrongWord1";
         Assertions.assertThatThrownBy(() -> memberProfileService.confirmPassword(
-            member.getEmail(), inputPassword))
+                member.getEmail(), inputPassword))
             .isInstanceOf(WrongConfirmPasswordException.class);
     }
 

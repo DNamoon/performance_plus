@@ -36,10 +36,8 @@ class PerformanceScheduleControllerTest {
 
     @MockBean
     private PerformanceScheduleService performanceScheduleService;
-
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -90,7 +88,7 @@ class PerformanceScheduleControllerTest {
             ).andDo(print())
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.statusCode").value(400))
-            .andExpect(jsonPath("$.errorData.errorType").value(ClientErrorType.INVALID_REQUEST_EXCEPTION.name()));
+            .andExpect(jsonPath("$.data.errorType").value(ClientErrorType.INVALID_REQUEST_EXCEPTION.name()));
 
     }
 
@@ -116,7 +114,7 @@ class PerformanceScheduleControllerTest {
             ).andDo(print())
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.statusCode").value(400))
-            .andExpect(jsonPath("$.errorData.errorType").value(ClientErrorType.INVALID_REQUEST_EXCEPTION.name()));
+            .andExpect(jsonPath("$.data.errorType").value(ClientErrorType.INVALID_REQUEST_EXCEPTION.name()));
 
     }
 

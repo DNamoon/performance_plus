@@ -34,17 +34,25 @@ public class PerformanceSchedule {
 
     @Builder
     private PerformanceSchedule(Long id, LocalDateTime performanceDate, int ticketQuantity,
-        int initialTicketQuantity, PerformanceStatus performanceStatus, Performance performance) {
+        PerformanceStatus performanceStatus, Performance performance) {
         this.id = id;
         this.performanceDate = performanceDate;
         this.ticketQuantity = ticketQuantity;
-        this.initialTicketQuantity = initialTicketQuantity;
+        this.initialTicketQuantity = ticketQuantity;
         this.performanceStatus = PerformanceStatus.STAND_BY;
         this.performance = performance;
+    }
+
+    public void updatePerformanceDate(LocalDateTime performanceDate) {
+        this.performanceDate = performanceDate;
     }
 
     public void updateTicketQuantity(int ticketQuantity) {
         this.ticketQuantity = ticketQuantity;
     }
 
+    public void updatePerformanceSchedule(LocalDateTime performanceDate, int ticketQuantity) {
+        this.updatePerformanceDate(performanceDate);
+        this.updateTicketQuantity(ticketQuantity);
+    }
 }

@@ -1,16 +1,13 @@
 package com.starter.performance.service;
 
-import com.starter.performance.domain.Member;
+import com.starter.performance.ExcludeSecurityAutoConfiguration;
 import com.starter.performance.repository.MemberRepository;
-import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class AdminMemberProfileServiceTest {
+
+class AdminMemberProfileServiceTest extends ExcludeSecurityAutoConfiguration {
 
     @Autowired
     private MemberRepository memberRepository;
