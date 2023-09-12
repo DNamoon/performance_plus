@@ -1,7 +1,7 @@
 package com.starter.performance.exception;
 
 public enum MemberProfileErrorType {
-    WRONG_PASSWORD_EXCEPTION,
+    WRONG_CONFIRM_PASSWORD_EXCEPTION,
     INVALID_MEMBER_EXCEPTION,
     INVALID_PASSWORD_EXCEPTION,
     INVALID_PHONE_NUMBER_EXCEPTION,
