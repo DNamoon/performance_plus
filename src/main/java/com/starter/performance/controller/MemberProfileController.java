@@ -4,6 +4,7 @@ import com.starter.performance.controller.dto.MemberProfileRequestDto;
 import com.starter.performance.controller.dto.ResponseDto;
 import com.starter.performance.domain.SuccessMemberProfileServiceType;
 import com.starter.performance.service.MemberProfileService;
+import com.starter.performance.service.dto.ConfirmPasswordRequestDto;
 import com.starter.performance.service.dto.MemberProfileResponseDto;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +16,9 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("/api")
 @RestController
 public class MemberProfileController {
     private final MemberProfileService memberProfileService;
@@ -27,8 +26,9 @@ public class MemberProfileController {
     //비밀번호 확인
     @PostMapping("/auth/password")
     public ResponseEntity<?> confirmPassword(Authentication auth,
-        @RequestBody String inputPassword) {
+        @RequestBody ConfirmPasswordRequestDto input) {
         String email = auth.getName();
+        String inputPassword = input.getInputPassword();
         boolean body = memberProfileService.confirmPassword(email, inputPassword);
         return new ResponseEntity<>(
             new ResponseDto(

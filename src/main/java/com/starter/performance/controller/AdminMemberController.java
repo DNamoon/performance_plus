@@ -1,9 +1,9 @@
 package com.starter.performance.controller;
 
 import com.starter.performance.controller.dto.ResponseDto;
-import com.starter.performance.domain.Member;
 import com.starter.performance.domain.SuccessAdminMemberServiceType;
 import com.starter.performance.service.AdminMemberService;
+import com.starter.performance.service.dto.MemberInquiryResponseDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class AdminMemberController {
     //활성 계정(탈퇴 X)
     @GetMapping("/members")
     public ResponseEntity<?> memberList() {
-        List<Member> body = adminMemberService.memberList();
+        List<MemberInquiryResponseDto> body = adminMemberService.memberList();
         return new ResponseEntity<>(
             new ResponseDto(
                 HttpStatus.OK.value(),
@@ -39,7 +39,7 @@ public class AdminMemberController {
     //비활성 계정 포함
     @GetMapping("/members/all")
     public ResponseEntity<?> memberListAll() {
-        List<Member> body = adminMemberService.memberListAll();
+        List<MemberInquiryResponseDto> body = adminMemberService.memberListAll();
         return new ResponseEntity<>(
             new ResponseDto(
                 HttpStatus.OK.value(),
@@ -53,7 +53,7 @@ public class AdminMemberController {
     //회원 검색
     @GetMapping("/members/{email}")
     public ResponseEntity<ResponseDto> searchMember(@PathVariable String email) {
-        List<Member> body = adminMemberService.searchMember(email);
+        List<MemberInquiryResponseDto> body = adminMemberService.searchMember(email);
         return new ResponseEntity<>(
             new ResponseDto(
                 HttpStatus.OK.value(),
