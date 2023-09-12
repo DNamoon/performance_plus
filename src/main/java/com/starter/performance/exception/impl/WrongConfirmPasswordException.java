@@ -14,6 +14,6 @@ public class WrongConfirmPasswordException extends AbstractException {
 
     @Override
     public ErrorData getData() {
-        return new ErrorData(MemberProfileErrorType.WRONG_PASSWORD_EXCEPTION.name());
+        return new ErrorData(MemberProfileErrorType.WRONG_CONFIRM_PASSWORD_EXCEPTION.name());
     }
 }

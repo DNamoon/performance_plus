@@ -1,15 +1,15 @@
 package com.starter.performance.service;
 
-import com.starter.performance.domain.Member;
+import com.starter.performance.service.dto.MemberInquiryResponseDto;
 import java.util.List;
 
 public interface AdminMemberService {
 
-    List<Member> memberList();
+    List<MemberInquiryResponseDto> memberList();
 
-    List<Member> memberListAll();
+    List<MemberInquiryResponseDto> memberListAll();
 
-    List<Member> searchMember(String email);
+    List<MemberInquiryResponseDto> searchMember(String email);
 
     boolean blockMember(String email);
 }

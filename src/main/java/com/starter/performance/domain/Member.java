@@ -33,7 +33,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @SQLDelete(sql = "UPDATE member SET withdrawal_date = CURRENT_TIMESTAMP WHERE id = ?")
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"updatedDate"}, allowGetters = true)
 public class Member {
 
     @Id
@@ -65,9 +64,6 @@ public class Member {
     @Column(length = 16, nullable = false)
     @Enumerated(EnumType.STRING)
     private Permission permission;
-
-    @Column(nullable = false)
-    private boolean emailAuth;
 
     @Column(nullable = false)
     private boolean sanctionWhether;

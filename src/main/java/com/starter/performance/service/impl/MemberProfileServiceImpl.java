@@ -59,7 +59,7 @@ public class MemberProfileServiceImpl implements MemberProfileService {
             .nickname(member.getNickname())
             .registeredDate(member.getRegisteredDate())
             .modifiedDate(member.getModifiedDate())
-            .rating(member.getRating())
+            .rating(member.getRating().getName().name())
             .build();
     }
 
@@ -73,7 +73,7 @@ public class MemberProfileServiceImpl implements MemberProfileService {
             throw new InvalidPhoneNumberException();
         }
         if (!memberProfileRequestDto.getNickname()
-            .matches("^[a-zA-Z0-9]{2,10}$")) {
+            .matches("^[a-zA-Z0-9]{2,16}$")) {
             throw new InvalidNicknameException();
         }
         if (memberRepository.findByNickname(memberProfileRequestDto.getNickname()).isPresent()) {
