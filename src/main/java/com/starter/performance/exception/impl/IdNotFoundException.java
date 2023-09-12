@@ -14,6 +14,6 @@ public class IdNotFoundException extends AbstractException {
 
     @Override
     public ErrorData getData() {
-        return new ErrorData(BookmarkErrorCode.IdNotFoundException.name());
+        return new ErrorData(BookmarkErrorCode.ID_NOT_FOUND_EXCEPTION.name());
     }
 }

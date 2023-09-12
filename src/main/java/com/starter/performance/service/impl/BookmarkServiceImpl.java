@@ -113,7 +113,7 @@ public class BookmarkServiceImpl implements BookmarkService {
         return ResponseDto.builder()
             .message(email + " 님의 북마크 목록 입니다.")
             .statusCode(HttpStatus.OK.value())
-            .body(responseDtoList.isEmpty() ? null : responseDtoList)
+            .body(responseDtoList)
             .build();
     }
 }
