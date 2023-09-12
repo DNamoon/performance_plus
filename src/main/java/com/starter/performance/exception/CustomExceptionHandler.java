@@ -4,7 +4,6 @@ import static com.starter.performance.exception.ClientErrorType.INVALID_REQUEST_
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 import com.starter.performance.exception.dto.ErrorResponseDto;
-import java.util.Objects;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -22,8 +21,7 @@ public class CustomExceptionHandler {
             .data(exception.getData())
             .build();
 
-        return new ResponseEntity<>(errorResponseDto,
-            Objects.requireNonNull(HttpStatus.resolve(exception.getStatusCode())));
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.resolve(exception.getStatusCode()));
     }
 
     @ResponseStatus(BAD_REQUEST)
