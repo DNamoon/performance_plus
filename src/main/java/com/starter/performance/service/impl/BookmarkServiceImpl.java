@@ -7,6 +7,7 @@ import com.starter.performance.domain.Member;
 import com.starter.performance.domain.Performance;
 import com.starter.performance.domain.PerformanceSchedule;
 import com.starter.performance.exception.impl.AlreadyRegisteredBookmarkException;
+import com.starter.performance.exception.impl.IdNotFoundException;
 import com.starter.performance.exception.impl.MisinformationException;
 import com.starter.performance.repository.BookmarkRepository;
 import com.starter.performance.repository.MemberRepository;
@@ -90,14 +91,21 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Override
     public ResponseDto bookmarkList(String email) {
-        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new MisinformationException());
+        Member member = memberRepository.findByEmail(email).orElseThrow(MisinformationException::new);
         List<Bookmark> bookmarkList = bookmarkRepository.findAllByMember(member);
 
         List<BookmarkResponseDto> responseDtoList = new ArrayList<>();
         for (Bookmark bookmark : bookmarkList){
+            Performance performance =
+                performanceRepository.findById(bookmark.getPerformance().getId())
+                    .orElseThrow(IdNotFoundException::new);
+            PerformanceSchedule performanceSchedule =
+                performanceScheduleRepository.findByPerformance(performance)
+                    .orElseThrow(IdNotFoundException::new);
+
             BookmarkResponseDto dto = new BookmarkResponseDto(
-                bookmark.getPerformanceName(),
-                bookmark.getPerformanceDate()
+                performance.getName(),
+                performanceSchedule.getPerformanceDate()
             );
             responseDtoList.add(dto);
         }
@@ -105,8 +113,7 @@ public class BookmarkServiceImpl implements BookmarkService {
         return ResponseDto.builder()
             .message(email + " 님의 북마크 목록 입니다.")
             .statusCode(HttpStatus.OK.value())
-            .body(responseDtoList.isEmpty() ? null : responseDtoList)
+            .body(responseDtoList)
             .build();
     }
-
 }
