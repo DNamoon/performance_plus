@@ -25,6 +25,7 @@ public class PerformanceSchedule {
     private Long id;
     private LocalDateTime performanceDate;
     private int ticketQuantity;
+    private int initialTicketQuantity;
     @Enumerated(EnumType.STRING)
     private PerformanceStatus performanceStatus;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,7 +38,21 @@ public class PerformanceSchedule {
         this.id = id;
         this.performanceDate = performanceDate;
         this.ticketQuantity = ticketQuantity;
+        this.initialTicketQuantity = ticketQuantity;
         this.performanceStatus = PerformanceStatus.STAND_BY;
         this.performance = performance;
+    }
+
+    public void updatePerformanceDate(LocalDateTime performanceDate) {
+        this.performanceDate = performanceDate;
+    }
+
+    public void updateTicketQuantity(int ticketQuantity) {
+        this.ticketQuantity = ticketQuantity;
+    }
+
+    public void updatePerformanceSchedule(LocalDateTime performanceDate, int ticketQuantity) {
+        this.updatePerformanceDate(performanceDate);
+        this.updateTicketQuantity(ticketQuantity);
     }
 }

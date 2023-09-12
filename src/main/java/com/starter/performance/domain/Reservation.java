@@ -34,9 +34,6 @@ public class Reservation {
     @JoinColumn(name = "performance_schedule")
     private PerformanceSchedule performanceSchedule;
 
-    @Column(nullable = false, length = 100)
-    private String performanceName;
-
     @Column(nullable = false)
     private Integer reservedTicketNum;
 
@@ -45,9 +42,13 @@ public class Reservation {
     private ReservationStatus reservationStatus;
 
     @Column(nullable = false)
-    private LocalDateTime performanceDate;
-
-    @Column(nullable = false)
     private LocalDateTime reservationDate;
 
+    public void updateReservedTicketNum(Integer reservedTicketNum) {
+        this.reservedTicketNum = reservedTicketNum;
+    }
+
+    public void updateReservationStatus(ReservationStatus reservationStatus) {
+        this.reservationStatus = reservationStatus;
+    }
 }

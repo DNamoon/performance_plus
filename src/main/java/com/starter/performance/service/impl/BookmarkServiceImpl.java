@@ -7,6 +7,7 @@ import com.starter.performance.domain.Member;
 import com.starter.performance.domain.Performance;
 import com.starter.performance.domain.PerformanceSchedule;
 import com.starter.performance.exception.impl.AlreadyRegisteredBookmarkException;
+import com.starter.performance.exception.impl.IdNotFoundException;
 import com.starter.performance.exception.impl.MisinformationException;
 import com.starter.performance.repository.BookmarkRepository;
 import com.starter.performance.repository.MemberRepository;
@@ -19,6 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -88,14 +91,29 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Override
     public ResponseDto bookmarkList(String email) {
-        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new MisinformationException());
+        Member member = memberRepository.findByEmail(email).orElseThrow(MisinformationException::new);
         List<Bookmark> bookmarkList = bookmarkRepository.findAllByMember(member);
+
+        List<BookmarkResponseDto> responseDtoList = new ArrayList<>();
+        for (Bookmark bookmark : bookmarkList){
+            Performance performance =
+                performanceRepository.findById(bookmark.getPerformance().getId())
+                    .orElseThrow(IdNotFoundException::new);
+            PerformanceSchedule performanceSchedule =
+                performanceScheduleRepository.findByPerformance(performance)
+                    .orElseThrow(IdNotFoundException::new);
+
+            BookmarkResponseDto dto = new BookmarkResponseDto(
+                performance.getName(),
+                performanceSchedule.getPerformanceDate()
+            );
+            responseDtoList.add(dto);
+        }
 
         return ResponseDto.builder()
             .message(email + " 님의 북마크 목록 입니다.")
             .statusCode(HttpStatus.OK.value())
-            .body(bookmarkList.isEmpty() ? null : bookmarkList)
+            .body(responseDtoList)
             .build();
     }
-
 }

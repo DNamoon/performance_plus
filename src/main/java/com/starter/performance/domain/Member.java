@@ -73,7 +73,7 @@ public class Member {
     private Rating rating;
 
     @OneToMany(mappedBy = "member")
-    private List<Review> reviews = new ArrayList<>();
+    private final List<Review> reviews = new ArrayList<>();
 
     @Builder
     public Member(String email, String password, String phoneNumber, String nickname) {
