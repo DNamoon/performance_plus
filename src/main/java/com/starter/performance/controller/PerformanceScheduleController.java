@@ -20,13 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/admin/performances")
 @RequiredArgsConstructor
 public class PerformanceScheduleController {
 
     private final PerformanceScheduleService performanceScheduleService;
 
-    @PostMapping("/{performanceId}/schedules")
+    @PostMapping("/admin/performances/{performanceId}/schedules")
     public ResponseEntity<ResponseDto> create(@PathVariable Long performanceId,
         @Valid @RequestBody CreatePerformanceScheduleRequestDto request) {
 
@@ -40,7 +39,7 @@ public class PerformanceScheduleController {
             );
     }
 
-    @PatchMapping("/schedules/{performanceScheduleId}")
+    @PatchMapping("/admin/performances/schedules/{performanceScheduleId}")
     public ResponseEntity<ResponseDto> updatePerformanceSchedule(@PathVariable Long performanceScheduleId,
         @Valid @RequestBody UpdatePerformanceScheduleRequestDto request) {
 

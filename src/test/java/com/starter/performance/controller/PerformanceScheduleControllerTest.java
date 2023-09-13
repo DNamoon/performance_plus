@@ -59,7 +59,7 @@ class PerformanceScheduleControllerTest {
         String json = objectMapper.writeValueAsString(request);
 
         //when //then
-        mockMvc.perform(post("/api/admin/performances/{performanceId}/schedules", 1L)
+        mockMvc.perform(post("/admin/performances/{performanceId}/schedules", 1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
             ).andDo(print())
@@ -82,7 +82,7 @@ class PerformanceScheduleControllerTest {
                 .performanceScheduleId(1L)
                 .build());
 
-        mockMvc.perform(post("/api/admin/performances/{performanceId}/schedules", 1L)
+        mockMvc.perform(post("/admin/performances/{performanceId}/schedules", 1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
             ).andDo(print())
@@ -108,7 +108,7 @@ class PerformanceScheduleControllerTest {
         doThrow(IllegalArgumentException.class).when(performanceScheduleService)
             .create(anyLong(), any(CreatePerformanceScheduleRequestServiceDto.class));
 
-        mockMvc.perform(post("/api/admin/performances/{performanceId}/schedules", 1L)
+        mockMvc.perform(post("/admin/performances/{performanceId}/schedules", 1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
             ).andDo(print())

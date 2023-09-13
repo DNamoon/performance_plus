@@ -46,11 +46,11 @@ public class PerformanceRepositoryQueryDslImpl extends QueryDslRepositorySupport
     }
 
     private BooleanExpression artistNameContains(String artistName) {
-        return artistName == null ? null : QArtist.artist.name.contains(artistName);
+        return artistName == null ? null : QArtist.artist.name.like("%" + artistName + "%");
     }
 
     private BooleanExpression performanceNameContains(String performanceName) {
-        return performanceName == null ? null : QPerformance.performance.name.contains(performanceName);
+        return performanceName == null ? null : QPerformance.performance.name.like("%" + performanceName + "%");
     }
 
     private OrderSpecifier<?> orderBy(Pageable pageable) {
