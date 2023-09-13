@@ -58,7 +58,6 @@ public class BookmarkServiceImpl implements BookmarkService {
         return ResponseDto.builder()
             .message(performance.getName() + "(이)가 북마크 되었습니다.")
             .statusCode(HttpStatus.OK.value())
-            .body(null)
             .build();
     }
 
