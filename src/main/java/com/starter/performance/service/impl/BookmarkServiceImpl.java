@@ -38,20 +38,11 @@ public class BookmarkServiceImpl implements BookmarkService {
     public ResponseDto createBookmark(BookmarkRequestDto bookmarkRequest, Authentication auth) {
 
         String email = auth.getName();
-        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new MisinformationException());
+        Member member = memberRepository.findByEmail(email).orElseThrow(MisinformationException::new);
 
         Performance performance =
-            performanceRepository.findByIdAndName(bookmarkRequest.getPerformanceId(), bookmarkRequest.getPerformanceName())
-                .orElseThrow(() -> new MisinformationException());
-
-        PerformanceSchedule performanceSchedule =
-            performanceScheduleRepository.findByPerformance(performance)
-                .orElseThrow(() -> new MisinformationException());
-
-        if (!bookmarkRequest.getPerformanceDate().equals(performanceSchedule.getPerformanceDate())) {
-            throw new MisinformationException();
-        }
-
+            performanceRepository.findById(bookmarkRequest.getPerformanceId())
+                .orElseThrow(MisinformationException::new);
 
         if (bookmarkRepository.existsByMemberIdAndPerformanceId(member.getId(), performance.getId())) {
             throw new AlreadyRegisteredBookmarkException();
@@ -60,18 +51,13 @@ public class BookmarkServiceImpl implements BookmarkService {
         Bookmark bookmark = Bookmark.builder()
             .member(member)
             .performance(performance)
-            .performanceName(performance.getName())
-            .performanceDate(performanceSchedule.getPerformanceDate())
             .build();
 
         bookmarkRepository.save(bookmark);
 
         return ResponseDto.builder()
-            .message(bookmark.getPerformanceName() + "(이)가 북마크 되었습니다.")
+            .message(performance.getName() + "(이)가 북마크 되었습니다.")
             .statusCode(HttpStatus.OK.value())
-            .body(BookmarkResponseDto.builder()
-                .performanceDate(bookmark.getPerformanceDate())
-                .performanceName(bookmark.getPerformanceName()).build())
             .build();
     }
 
@@ -79,7 +65,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     public ResponseDto deleteBookmark(BookmarkRequestDto bookmarkRequest, Authentication auth) {
 
         String email = auth.getName();
-        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new MisinformationException());
+        Member member = memberRepository.findByEmail(email).orElseThrow(MisinformationException::new);
 
         bookmarkRepository.deleteByPerformanceIdAndMember(bookmarkRequest.getPerformanceId(), member);
 

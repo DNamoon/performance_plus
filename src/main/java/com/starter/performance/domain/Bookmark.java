@@ -1,9 +1,7 @@
 package com.starter.performance.domain;
 
 import lombok.*;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @ToString
 @Entity
@@ -24,7 +22,4 @@ public class Bookmark {
     @JoinColumn(name = "performance",  referencedColumnName = "id")
     private Performance performance;
 
-    private String performanceName;
-
-    private LocalDateTime performanceDate;
 }
