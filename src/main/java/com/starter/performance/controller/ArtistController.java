@@ -21,12 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/admin/performances")
 public class ArtistController {
 
     private final ArtistService artistService;
 
-    @PostMapping("/{performanceId}/artists")
+    @PostMapping("/admin/performances/{performanceId}/artists")
     public ResponseEntity<ResponseDto> create(@PathVariable Long performanceId,
         @Valid @RequestBody CreateArtistRequestDto request) {
 
@@ -39,7 +38,7 @@ public class ArtistController {
             );
     }
 
-    @PatchMapping("/{performanceId}/artists/{artistId}")
+    @PatchMapping("/admin/performances/{performanceId}/artists/{artistId}")
     public ResponseEntity<ResponseDto> updateArtist(@PathVariable Long performanceId,
         @PathVariable Long artistId,
         @Valid @RequestBody UpdateArtistRequestDto request) {

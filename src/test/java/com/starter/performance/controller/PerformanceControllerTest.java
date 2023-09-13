@@ -75,7 +75,7 @@ class PerformanceControllerTest {
             StandardCharsets.UTF_8));
 
         //when //then
-        mockMvc.perform(multipart(HttpMethod.POST, "/api/admin/performances")
+        mockMvc.perform(multipart(HttpMethod.POST, "/admin/performances")
                 .file(performanceImage)
                 .file(jsonMultipart)
                 .contentType(MediaType.MULTIPART_FORM_DATA)
@@ -105,7 +105,7 @@ class PerformanceControllerTest {
             MediaType.APPLICATION_JSON_VALUE, json.getBytes(
             StandardCharsets.UTF_8));
 
-        mockMvc.perform(multipart(HttpMethod.POST, "/api/admin/performances")
+        mockMvc.perform(multipart(HttpMethod.POST, "/admin/performances")
                 .file(jsonMultipart)
                 .contentType(MediaType.MULTIPART_FORM_DATA)
             ).andDo(print())

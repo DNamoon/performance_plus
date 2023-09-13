@@ -61,7 +61,7 @@ public class ArtistControllerTest {
         String json = objectMapper.writeValueAsString(request);
 
         //when //then
-        mockMvc.perform(post("/api/admin/performances/{performanceId}/artists", performanceId)
+        mockMvc.perform(post("/admin/performances/{performanceId}/artists", performanceId)
                 .content(json)
                 .contentType(MediaType.APPLICATION_JSON)
             ).andDo(print())
@@ -86,7 +86,7 @@ public class ArtistControllerTest {
                 .artistId(artistId)
                 .build());
 
-        mockMvc.perform(post("/api/admin/performances/{performanceId}/artists", performanceId)
+        mockMvc.perform(post("/admin/performances/{performanceId}/artists", performanceId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
             ).andDo(print())
@@ -110,7 +110,7 @@ public class ArtistControllerTest {
         doThrow(IllegalArgumentException.class).when(artistService)
             .create(anyLong(), any(CreateArtistRequestServiceDto.class));
 
-        mockMvc.perform(post("/api/admin/performances/{performanceId}/artists", 1L)
+        mockMvc.perform(post("/admin/performances/{performanceId}/artists", 1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json)
             ).andDo(print())
