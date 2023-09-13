@@ -6,6 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface PerformanceRepository extends JpaRepository<Performance, Long>, PerformanceRepositoryQueryDsl {
-    Optional<Performance> findByIdAndName(Long Id, String name);
-    Optional<Performance> findById(Long id);
+        Optional<Performance> findById(Long id);
 }
